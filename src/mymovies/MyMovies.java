@@ -4,6 +4,8 @@
  */
 package mymovies;
 
+import fr.ece.MyMovies.Vue.Window;
+
 /**
  *
  * @author timotheegrosjean
@@ -15,5 +17,9 @@ public class MyMovies {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+         Window test = new Window();
+         
+        test.setVisible(true);
+        
     }
 }
