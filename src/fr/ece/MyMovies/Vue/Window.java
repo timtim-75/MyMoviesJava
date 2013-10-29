@@ -27,15 +27,39 @@ public class Window extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //On dit à l'application de se fermer
                 
                 JPanel panel = new JPanel();
+                JPanel panel1 = new JPanel();
                 panel.setLayout(new BorderLayout());
+                panel1.setLayout(new GridLayout(3,1));
+                JTextField searchZone = new JTextField(15);
+                
                 
                 JPanel menuNord = new JPanel();
-                menuNord.add(new JButton("my First JButton"));
-                menuNord.add(new JButton("my Second JButton"));
-                menuNord.add(new JButton("my Third JButton"));
-                this.add(panel);
+                JPanel boutons = new JPanel();
+                JPanel search = new JPanel();
+                menuNord.setLayout(new GridLayout(1,2));
+         
+                boutons.add(new JButton(new Actions("my First JButton")));
+                boutons.add(new JButton("my Second JButton"));
+                boutons.add(new JButton("my Third JButton"));
+                search.add(searchZone); 
+                menuNord.add(boutons);
+                menuNord.add(search);
+                
+                
+                JPanel menuOuest = new JPanel();
+                
+                panel1.add(new JButton("Zblerf"));
+                panel1.add(new JButton("Zdebler"));
+                panel1.add(new JButton("mui"));
+                menuOuest.add(panel1);
+                
+                menuOuest.setBackground(Color.red);
+                menuNord.setBackground(Color.blue);
+                panel.setBackground(Color.black);
+                
+                panel.add(menuOuest,BorderLayout.WEST);
                 panel.add(menuNord,BorderLayout.NORTH);
-       
+                this.add(panel);
     }
     
 }
