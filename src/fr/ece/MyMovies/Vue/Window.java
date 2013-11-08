@@ -20,7 +20,7 @@ public class Window extends JFrame{
 	}
 
     private void build(){
-		this.setTitle("Ma première application"); //On donne un titre à l'application
+		this.setTitle("MyMovies"); //On donne un titre à l'application
 		this.setSize(800,600); //On donne une taille à notre fenêtre
 		this.setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
 		this.setResizable(true) ; //On interdit la redimensionnement de la fenêtre
@@ -38,8 +38,8 @@ public class Window extends JFrame{
                 JPanel search = new JPanel();
                 menuNord.setLayout(new GridLayout(1,2));
          
-                boutons.add(new JButton(new Actions("my First JButton")));
-                boutons.add(new JButton("my Second JButton"));
+                boutons.add(new JButton(new Ajout("Ajouter")));
+                boutons.add(new JButton(new Ajout("my Second JButton")));
                 boutons.add(new JButton("my Third JButton"));
                 search.add(searchZone); 
                 menuNord.add(boutons);

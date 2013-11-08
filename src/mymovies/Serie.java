@@ -42,7 +42,7 @@ public class Serie extends Film{
     }  
     
     //Constructeur
-    Serie()
+    public Serie()
     {
         season = 0;
         episode = 0;

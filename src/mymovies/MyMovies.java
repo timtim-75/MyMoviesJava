@@ -4,7 +4,11 @@
  */
 package mymovies;
 
+
+import Utilities.FonctionsBases;
+import Utilities.SQLite;
 import fr.ece.MyMovies.Vue.Window;
+
 
 /**
  *
@@ -17,7 +21,11 @@ public class MyMovies {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-         Window test = new Window();
+        
+        //AllFilms bibliotheque = new AllFilms();
+        
+        SQLite s = new SQLite(FonctionsBases.getDBPath());
+        Window test = new Window();
          
         test.setVisible(true);
         
