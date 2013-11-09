@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mymovies;
+package fr.ece.MyMovies.Model;
 
 /**
  *
@@ -14,6 +14,14 @@ public class Serie extends Film{
     int season;
     int episode;
     String name;
+    
+    public Serie(int filmID1,String name1, int season1, int episode1)
+    {
+        this.filmID = filmID1;
+        this.name = name1;
+        this.season = season1;
+        this.episode = episode1;
+    }
     
     //Getters & Setter
     public int getSeason()

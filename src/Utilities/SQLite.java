@@ -5,6 +5,7 @@
 package Utilities;
 
 import java.sql.*;
+import fr.ece.MyMovies.Model.Film;
 import org.sqlite.JDBC;
 /**
  *
@@ -63,7 +64,7 @@ public class SQLite {
         
         System.out.println(name);
         
-        int execute = st.executeUpdate("INSERT INTO movies(title) VALUES(\'"+name+"\')");
+        int execute = st.executeUpdate("INSERT INTO movies(title) VALUES WHERE NOT EXISTS(\'"+name+"\')");
         
         }
         catch(Exception e){
@@ -86,6 +87,8 @@ public class SQLite {
         
         System.out.println(serie.name);
         
+        
+        
         int execute = st.executeUpdate("INSERT INTO series(title, season, episode) VALUES(\'"+serie.name+"\',\'"+serie.season+"\',\'"+serie.episode+"\')");
         
         }
@@ -94,8 +97,21 @@ public class SQLite {
         }
     }
     
-    public static void deleteFilm()
+    public static void deleteFilm(Film currentFilm)
     {
+        try{
+        Class.forName("org.sqlite.JDBC");
+        //chargement du driver
+        con = DriverManager.getConnection("jdbc:sqlite:"+dbPath);
+ 
+        con.setAutoCommit(true);
+ 
+        st = con.createStatement();
+        int execute = st.executeUpdate("DELETE FROM movies WHERE id="+currentFilm.getFilmID()+"");
         
+        }
+        catch(Exception e){
+        System.out.println("DB ERROR: "+e);
+        }
     }
 }

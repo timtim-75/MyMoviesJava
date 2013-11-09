@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mymovies;
+package fr.ece.MyMovies.Model;
 
 import java.awt.Image;
 import java.util.ArrayList;
@@ -156,6 +156,14 @@ public class Film {
     public void setFilePath(String filePath1)
     {
         filePath = filePath1;
+    }
+    public int getFilmID()
+    {
+        return filmID;
+    }
+    public void setFilmID(int filmID1)
+    {
+        filmID = filmID1;
     }
     
     //Constructeur

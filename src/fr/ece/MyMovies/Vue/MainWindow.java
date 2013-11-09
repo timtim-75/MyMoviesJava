@@ -4,18 +4,29 @@
  */
 package fr.ece.MyMovies.Vue;
 
+import fr.ece.MyMovies.Model.SeriesModelTab;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.swing.table.TableColumn;
 
 
 /**
  *
  * @author timotheegrosjean
  */
-public class Window extends JFrame{
+public class MainWindow extends JFrame{
     
-    public Window(){
+    private SeriesModelTab modele;
+    
+    private JButton ajout;
+    private JButton suppression;
+    
+    private JTable tableau;
+    
+    public MainWindow(SeriesModelTab myModel){
 	super();
+        modele = myModel;
         build();
 	}
 
@@ -38,8 +49,10 @@ public class Window extends JFrame{
                 JPanel search = new JPanel();
                 menuNord.setLayout(new GridLayout(1,2));
          
-                boutons.add(new JButton(new Ajout("Ajouter")));
-                boutons.add(new JButton(new Ajout("my Second JButton")));
+                ajout = new JButton("Ajout");
+                boutons.add(ajout);
+                suppression = new JButton("Supprimer");
+                boutons.add(suppression);
                 boutons.add(new JButton("my Third JButton"));
                 search.add(searchZone); 
                 menuNord.add(boutons);
@@ -56,10 +69,30 @@ public class Window extends JFrame{
                 menuOuest.setBackground(Color.red);
                 menuNord.setBackground(Color.blue);
                 panel.setBackground(Color.black);
+ 
+                tableau = new JTable(modele);
+                
+                panel.add(new JScrollPane(tableau),BorderLayout.CENTER);
                 
                 panel.add(menuOuest,BorderLayout.WEST);
                 panel.add(menuNord,BorderLayout.NORTH);
+                
                 this.add(panel);
+    }
+    
+    public void registerAjoutButtonListener(ActionListener l){
+        System.out.println("Ca register en masse");
+        ajout.addActionListener(l);
+    }
+    
+    
+    public void registerRemoveButtonListener(ActionListener l){
+        System.out.println("Ca register toujours tahu");
+        suppression.addActionListener(l);
+    }
+    public int[] getTabSelectedRows(){
+        
+        return tableau.getSelectedRows();
     }
     
 }

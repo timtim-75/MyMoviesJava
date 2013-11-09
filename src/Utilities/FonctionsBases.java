@@ -50,16 +50,11 @@ public class FonctionsBases {
         
         filmTitle = newName.replace('.',' ');
         filmTitle = filmTitle.trim();
-        if(filmTitle.matches(".*L .*"))
-        {
-            filmTitle = filmTitle.replace("L ", "L'");
-        }
-        
-        
         
         
         return filmTitle;
     }
+    
     
     public static ObjectSerie reTitleSerie(String fileName)
     {
