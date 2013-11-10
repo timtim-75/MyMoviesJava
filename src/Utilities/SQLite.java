@@ -114,4 +114,14 @@ public class SQLite {
         System.out.println("DB ERROR: "+e);
         }
     }
+    
+    public void getFilmsFromDB(String dbPath)
+    {
+        
+    }
+    
+    public void getSeriesFromDB(String dbPath)
+    {
+        
+    }
 }

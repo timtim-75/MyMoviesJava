@@ -37,7 +37,7 @@ public class MainWindowController {
         
         initFromDB();
         
-        mainWindow = new MainWindow(seriesModele);
+        mainWindow = new MainWindow(seriesModele, filmsModele);
         
         // Enregistrer les listeners
         mainWindow.registerAjoutButtonListener(new ActionListener(){
@@ -45,18 +45,18 @@ public class MainWindowController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Ca bomberde");
-                JFileChooser dialogue = new JFileChooser("/Users/timotheegrosjean/Desktop");
+                JFileChooser choisirVideo = new JFileChooser("/Users/timotheegrosjean/Desktop");
         
-                dialogue.setFileFilter(new FileNameExtensionFilter("Fichier Video", "mp4","avi","mkv","mov","mpg","mpa","wma","vob"));
-                if (dialogue.showOpenDialog(null)== JFileChooser.APPROVE_OPTION) 
+                choisirVideo.setFileFilter(new FileNameExtensionFilter("Fichier Video", "mp4","avi","mkv","mov","mpg","mpa","wma","vob"));
+                if (choisirVideo.showOpenDialog(null)== JFileChooser.APPROVE_OPTION) 
                 {
 
                     Film film = new Film();
-                    File fichier = dialogue.getSelectedFile();
-                    if(FonctionsBases.isFilm(dialogue.getSelectedFile().getName()))
+                    File fichier = choisirVideo.getSelectedFile();
+                    if(FonctionsBases.isFilm(choisirVideo.getSelectedFile().getName()))
                     {
-                        film.setFileName(dialogue.getSelectedFile().getName());
-                        film.setFilePath(dialogue.getSelectedFile().getAbsolutePath());
+                        film.setFileName(choisirVideo.getSelectedFile().getName());
+                        film.setFilePath(choisirVideo.getSelectedFile().getAbsolutePath());
                         System.out.println(film.getFilePath());
                         film.setTitle(FonctionsBases.reTitleFilm(film.getFileName()));
                         System.out.println(film.getTitle());
@@ -66,7 +66,7 @@ public class MainWindowController {
                     {
                         Serie serie = new Serie();
                         ObjectSerie s = new ObjectSerie();
-                        s = FonctionsBases.reTitleSerie(dialogue.getSelectedFile().getName());
+                        s = FonctionsBases.reTitleSerie(choisirVideo.getSelectedFile().getName());
                         serie.setEpisode(s.getEpisode());
                         serie.setName(s.getName());
                         serie.setSeason(s.getSeason());
@@ -85,7 +85,7 @@ public class MainWindowController {
             
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Ca t'encule");
-                int[] selection = mainWindow.getTabSelectedRows();
+                int[] selection = mainWindow.getTabSeriesSelectedRows();
  
                 for(int i = selection.length - 1; i >= 0; i--){
                     seriesModele.removeSerie(selection[i]);
@@ -93,6 +93,29 @@ public class MainWindowController {
             }
             
         }
+        });
+        
+        mainWindow.registerSousTitresButtonListener(new ActionListener(){
+
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser choisirSousTitres = new JFileChooser("/Users/timotheegrosjean/Desktop");
+                choisirSousTitres.setFileFilter(new FileNameExtensionFilter("Fichier Sous-Titres", "ssa","srt","txt","sub"));
+                if (choisirSousTitres.showOpenDialog(null)== JFileChooser.APPROVE_OPTION) 
+                {
+
+                }
+            }
+            
+        });
+        
+        mainWindow.registerPlayButtonListener(new ActionListener(){
+            
+            public void actionPerformed(ActionEvent e) {
+                
+                
+            
+            }
+            
         });
                 
         
