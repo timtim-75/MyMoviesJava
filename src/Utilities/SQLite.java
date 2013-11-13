@@ -161,7 +161,7 @@ public class SQLite {
     
     public static ArrayList<Serie> getSeriesFromDB()
     {
-        System.out.println("Ca bomberde pas");
+        //System.out.println("Ca bomberde pas");
         ArrayList<Serie> seriesFromDB = new ArrayList<Serie>();
         
         Statement stmt = null;

@@ -5,3 +5,4 @@ ass
 *.war
 *.ear
 /build/
+/dist/

@@ -117,22 +117,22 @@ public class MainWindow extends JFrame{
     }
     
     public void registerAjoutButtonListener(ActionListener l){
-        System.out.println("Ca register en masse");
+        //System.out.println("Ca register en masse");
         ajout.addActionListener(l);
     }
     
     public void registerRemoveButtonListener(ActionListener l){
-        System.out.println("Ca register toujours tahu");
+        //System.out.println("Ca register toujours tahu");
         suppression.addActionListener(l);
     }
     
     public void registerSousTitresButtonListener(ActionListener l){
-        System.out.println("Ca register encore ma gueule");
+        //System.out.println("Ca register encore ma gueule");
         sousTitres.addActionListener(l); 
     }
     
     public void registerPlayButtonListener(ActionListener l){
-        System.out.println("Ca register encore et toujours");
+        //System.out.println("Ca register encore et toujours");
         play.addActionListener(l);
     }
     

@@ -44,7 +44,7 @@ public class MainWindowController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Ca bomberde");
+                //System.out.println("Ca bomberde");
                 JFileChooser choisirVideo = new JFileChooser("/Users/timotheegrosjean/Desktop");
         
                 choisirVideo.setFileFilter(new FileNameExtensionFilter("Fichier Video", "mp4","avi","mkv","mov","mpg","mpa","wma","vob"));
@@ -90,7 +90,7 @@ public class MainWindowController {
         mainWindow.registerRemoveButtonListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Ca t'encule");
+                //System.out.println("Ca t'encule");
                 switch(mainWindow.getSelectedTab()){
                     case 0:
                         bibliotheque.removeFilm(mainWindow.getTabFilmsSelectedRows());
