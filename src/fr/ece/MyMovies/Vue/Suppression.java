@@ -34,6 +34,6 @@ public class Suppression extends AbstractAction{
     public void actionPerformed (ActionEvent e) 
     {
         Film film = new Film();
-        SQLite.deleteFilm(film);
+        
     }
 }

@@ -4,6 +4,21 @@
  */
 package Utilities;
 
+import fr.ece.MyMovies.Model.Film;
+import fr.ece.MyMovies.Model.Serie;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author timotheegrosjean
@@ -12,6 +27,7 @@ public class FonctionsBases {
     
     static String interdit[] = {"YIFY", "x264", "1080p", "720p", "bluray", "brrip", "dvdrip","r5","srt", "extended", "cut", "director", "gaz", "axxo", "[www","Cpasbien","me]","unrated","limited","xvid-sparks","xvid-fwd", "ac3-314r", "dvdr","r4","dvdscr","TS", "ntsc","french","xvid-qcp", "mp4","avi","mkv","mov","mpg","mpa","wma","vob", }; 
     static String dbPath="/Users/timotheegrosjean/Desktop/films.db";
+    static File pathDatas;
     
     public static String getDBPath()
     {
@@ -21,6 +37,16 @@ public class FonctionsBases {
     public static void setDBPath(String dbPath1)
     {
         dbPath = dbPath1;
+    }
+    
+    public static File getPathDatas()
+    {
+        return pathDatas;
+    }
+    
+    public static void setPathDatas(File pathDatas1)
+    {
+        pathDatas= pathDatas1;
     }
     
     public static String reTitleFilm(String fileName)
@@ -106,6 +132,26 @@ public class FonctionsBases {
         return info;
     }
     
+    public static void removeFilmFromArrayList(ArrayList<Film> list, int id)
+    {
+        Film filmToDelete = null;
+        for(Film f : list){
+            if(f.getFilmID() == id) filmToDelete = f;
+        }
+        if(filmToDelete != null) list.remove(filmToDelete);
+    }
+    
+    public static void removeSerieFromArrayList(ArrayList<Serie> list, int id)
+    {
+        Serie serieToDelete = null;
+        for(Serie s : list){
+            if(s.getFilmID() == id) serieToDelete = s;
+        }
+        if(serieToDelete != null) list.remove(serieToDelete);
+    }
+    
+    
+    
     public static boolean isFilm(String fileName)
     {
         boolean answer=true;
@@ -117,6 +163,8 @@ public class FonctionsBases {
 
         return answer;
     }
+    
+    
     
     
 }

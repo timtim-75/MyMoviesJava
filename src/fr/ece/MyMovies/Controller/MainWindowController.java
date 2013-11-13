@@ -7,6 +7,7 @@ package fr.ece.MyMovies.Controller;
 import Utilities.FonctionsBases;
 import Utilities.ObjectSerie;
 import Utilities.SQLite;
+import fr.ece.MyMovies.Model.AllFilms;
 import fr.ece.MyMovies.Model.Film;
 import fr.ece.MyMovies.Model.FilmsModelTab;
 import fr.ece.MyMovies.Model.SeriesModelTab;
@@ -25,19 +26,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class MainWindowController {
     private MainWindow mainWindow;
-    private FilmsModelTab filmsModele;
-    private SeriesModelTab seriesModele; //Bibliothèque Series
-    // Bibliothèque
-    private SQLite db;
-    // DB Films
-    // DB Séries
-    // Objet DB
+    
+    
+    
+    private AllFilms bibliotheque = new AllFilms();
+    
     
     public MainWindowController(){
         
-        initFromDB();
+        bibliotheque.initFromDB();
         
-        mainWindow = new MainWindow(seriesModele, filmsModele);
+        
+        mainWindow = new MainWindow(bibliotheque);
         
         // Enregistrer les listeners
         mainWindow.registerAjoutButtonListener(new ActionListener(){
@@ -59,8 +59,11 @@ public class MainWindowController {
                         film.setFilePath(choisirVideo.getSelectedFile().getAbsolutePath());
                         System.out.println(film.getFilePath());
                         film.setTitle(FonctionsBases.reTitleFilm(film.getFileName()));
+                        film.setFilmID(bibliotheque.getLastFilmID()+1);
+                        bibliotheque.setLastFilmID(bibliotheque.getLastFilmID()+1);
                         System.out.println(film.getTitle());
-                        SQLite.addFilm(FonctionsBases.getDBPath(), film.getTitle());
+                        SQLite.addFilm(film);
+                        bibliotheque.addFilm(film);
                     }
                     else 
                     {
@@ -68,15 +71,18 @@ public class MainWindowController {
                         ObjectSerie s = new ObjectSerie();
                         s = FonctionsBases.reTitleSerie(choisirVideo.getSelectedFile().getName());
                         serie.setEpisode(s.getEpisode());
-                        serie.setName(s.getName());
+                        serie.setTitle(s.getName());
                         serie.setSeason(s.getSeason());
-                        SQLite.addSerie(FonctionsBases.getDBPath(), s);
+                        serie.setFilmID(bibliotheque.getLastSerieID()+1);
+                        bibliotheque.setLastSerieID(bibliotheque.getLastSerieID()+1);
+                        SQLite.addSerie(serie);
+                        bibliotheque.addSerie(serie);
 
                         System.out.println(serie.getName()+""+serie.getSeason()+" "+serie.getEpisode());
                     }
                 }
     
-                seriesModele.addSerie(new Serie(340,"The Walking Dead", 4, 12 ));
+                //seriesModele.addSerie(new Serie(340,"The Walking Dead", 4, 12 ));
             }
         
         });
@@ -85,14 +91,18 @@ public class MainWindowController {
             
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Ca t'encule");
-                int[] selection = mainWindow.getTabSeriesSelectedRows();
- 
-                for(int i = selection.length - 1; i >= 0; i--){
-                    seriesModele.removeSerie(selection[i]);
-                
-            }
+                switch(mainWindow.getSelectedTab()){
+                    case 0:
+                        bibliotheque.removeFilm(mainWindow.getTabFilmsSelectedRows());
+                        break;
+                    case 1:
+                        bibliotheque.removeSerie(mainWindow.getTabSeriesSelectedRows());
+                        break;
+                    default:
+                        break;
+                }
             
-        }
+            }
         });
         
         mainWindow.registerSousTitresButtonListener(new ActionListener(){
@@ -121,16 +131,6 @@ public class MainWindowController {
         
         mainWindow.setVisible(true);
         
-    }
-    
-    private void initFromDB(){
-        // Ouvrir la db
-        // Récupérer les objets films et series dans la db
-        // Remplir la les objets avec le contenu de la db
-        seriesModele = new SeriesModelTab();
-        db = new SQLite(FonctionsBases.getDBPath());
-        
-        //modele.remplir(db);
     }
     
 }

@@ -4,6 +4,7 @@
  */
 package fr.ece.MyMovies.Model;
 
+import Utilities.ObjectSerie;
 import javax.swing.table.*;
 import java.awt.*;
 import java.util.*;
@@ -14,26 +15,33 @@ import java.util.*;
  */
 public class SeriesModelTab extends AbstractTableModel {
     
-    private final ArrayList<Serie> series= new ArrayList<Serie>();
+    private ArrayList<Serie> series= new ArrayList<Serie>();
     
     
     
     private final String[] entetesSeries = {"ID", "Titre", "Saison", "Episode"};
  
-    public SeriesModelTab() {
+    public SeriesModelTab(ArrayList<Serie> seriesFromDB) {
         super();
- 
-        series.add(new Serie(1,"The Walking Dead", 4, 1 )) ;
-        series.add(new Serie(2,"The Walking Dead", 4, 2 ));
-        series.add(new Serie(3,"The Walking Dead", 4, 3 ));
-        series.add(new Serie(4,"The Walking Dead", 4, 4 ));
-        series.add(new Serie(5,"The Walking Dead", 4, 5 ));
-        series.add(new Serie(6,"Homeland", 3, 1));
-        series.add(new Serie(7,"Homeland", 3, 2));
-        series.add(new Serie(8,"Homeland", 3, 3));
+        
+        for(Serie serie : seriesFromDB)
+        {
+            series.add(serie);
+        }
 
    }
  
+    
+    public ArrayList<Serie> getSeries()
+    {
+        return series;
+    }
+    
+    public void setSeries(ArrayList<Serie> series)
+    {
+        this.series = series;
+    }
+    
     public int getRowCount() {
         return series.size();
     }
@@ -52,7 +60,7 @@ public class SeriesModelTab extends AbstractTableModel {
             case 0 :
                 return series.get(rowIndex).getFilmID();
             case 1 :
-                return series.get(rowIndex).getName();
+                return series.get(rowIndex).getTitle();
             case 2 :
                 return series.get(rowIndex).getSeason();
             case 3 :
@@ -65,20 +73,4 @@ public class SeriesModelTab extends AbstractTableModel {
        
     }
 
-    public void addSerie(Serie serie)
-    {
-        series.add(serie);
-        fireTableRowsInserted(series.size() -1, series.size() -1);
-    }
-    
-    public void removeSerie(int rowIndex) {
-        series.remove(rowIndex);
- 
-        fireTableRowsDeleted(rowIndex, rowIndex);
-    }
-    
-    public void remplirTab()
-    {
-        
-    }
 }

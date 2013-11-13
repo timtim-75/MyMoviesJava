@@ -166,7 +166,7 @@ public class Film {
         filmID = filmID1;
     }
     
-    //Constructeur
+    //Constructeurs
     public Film()
     {
         title = "";
@@ -182,6 +182,13 @@ public class Film {
         poster = null;
         grade = 0;
         comments = null;
+    }
+    
+    public Film(int id1,String title1)
+    {
+        filmID = id1;
+        title = title1;
+        
     }
     
     

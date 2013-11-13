@@ -18,7 +18,7 @@ public class Serie extends Film{
     public Serie(int filmID1,String name1, int season1, int episode1)
     {
         this.filmID = filmID1;
-        this.name = name1;
+        this.title = name1;
         this.season = season1;
         this.episode = episode1;
     }

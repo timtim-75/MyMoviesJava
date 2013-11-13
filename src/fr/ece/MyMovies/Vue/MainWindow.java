@@ -4,6 +4,7 @@
  */
 package fr.ece.MyMovies.Vue;
 
+import fr.ece.MyMovies.Model.AllFilms;
 import fr.ece.MyMovies.Model.FilmsModelTab;
 import fr.ece.MyMovies.Model.SeriesModelTab;
 import java.awt.*;
@@ -48,10 +49,10 @@ public class MainWindow extends JFrame{
     
     
     
-    public MainWindow(SeriesModelTab mySeriesModele, FilmsModelTab myFilmsModele){
+    public MainWindow(AllFilms bibliotheque){
 	super();
-        seriesModele = mySeriesModele;
-        filmsModele = myFilmsModele;
+        seriesModele = bibliotheque.getSerietheque();
+        filmsModele = bibliotheque.getFilmotheque();
         build();
 	}
 
@@ -143,6 +144,10 @@ public class MainWindow extends JFrame{
     public int[] getTabSeriesSelectedRows(){
         
         return tableauSeries.getSelectedRows();
+    }
+    
+    public int getSelectedTab(){
+        return tabs.getSelectedIndex();
     }
     
     

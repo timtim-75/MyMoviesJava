@@ -10,7 +10,7 @@ package Utilities;
  */
 public class ObjectSerie {
     
-    
+    int id;
     String name;
     int season;
     int episode;
@@ -43,5 +43,15 @@ public class ObjectSerie {
     public void setEpisode(int episode1)
     {
         episode=episode1;
+    }
+    
+    public int getID()
+    {
+        return id;
+    }
+    
+    public void setID(int id1)
+    {
+        id=id1;
     }
 }

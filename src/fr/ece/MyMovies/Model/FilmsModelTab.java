@@ -4,6 +4,7 @@
  */
 package fr.ece.MyMovies.Model;
 
+import Utilities.SQLite;
 import javax.swing.table.*;
 import java.awt.*;
 import java.util.*;
@@ -14,12 +15,33 @@ import java.util.*;
  */
 public class FilmsModelTab extends AbstractTableModel{
     
-    private final ArrayList<Film>  films = new ArrayList<Film>();
-    private final String[] entetesFilms = {"ID", "Titre", "Genre"};
+    private ArrayList<Film>  films = new ArrayList<Film>();
+    private final String[] entetesFilms = {"ID", "Titre"};
+    
+    public FilmsModelTab(ArrayList<Film> filmsFromDB)
+    {
+        super();
+        
+        for(Film film : filmsFromDB)
+        {
+            films.add(film);  
+        }
+
+    }
+    
+    public ArrayList<Film> getFilms()
+    {
+        return films;
+    }
+    
+    public void setFilms(ArrayList<Film> films)
+    {
+        this.films = films;
+    }
     
     
     
-     public int getRowCount() {
+    public int getRowCount() {
         return films.size();
     }
  
@@ -38,10 +60,7 @@ public class FilmsModelTab extends AbstractTableModel{
                 return films.get(rowIndex).getFilmID();
             case 1 :
                 return films.get(rowIndex).getTitle();
-            case 2 :
-                return films.get(rowIndex).getGenre();
-            
-            
+
             default : 
                 return null;
                 
@@ -49,17 +68,7 @@ public class FilmsModelTab extends AbstractTableModel{
        
     }
 
-    public void addSerie(Serie serie)
-    {
-        films.add(serie);
-        fireTableRowsInserted(films.size() -1, films.size() -1);
-    }
     
-    public void removeSerie(int rowIndex) {
-        films.remove(rowIndex);
- 
-        fireTableRowsDeleted(rowIndex, rowIndex);
-    }
     
     public void remplirTab()
     {
