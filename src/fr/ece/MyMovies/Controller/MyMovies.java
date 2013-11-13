@@ -9,6 +9,7 @@ import Utilities.FonctionsBases;
 import Utilities.SQLite;
 import fr.ece.MyMovies.Model.SeriesModelTab;
 import fr.ece.MyMovies.Vue.MainWindow;
+import java.io.IOException;
 
 
 /**
@@ -22,7 +23,7 @@ public class MyMovies {
      */
     private static MainWindowController mwc;
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
         
         //AllFilms bibliotheque = new AllFilms();

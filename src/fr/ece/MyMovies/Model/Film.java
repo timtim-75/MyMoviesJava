@@ -184,10 +184,12 @@ public class Film {
         comments = null;
     }
     
-    public Film(int id1,String title1)
+    public Film(int id1,String title1, String path1, String fileName1)
     {
         filmID = id1;
         title = title1;
+        filePath = path1;
+        fileName = fileName1;
         
     }
     

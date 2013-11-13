@@ -29,8 +29,8 @@ public class SQLite {
                 st = con.createStatement();
 
                 
-                int execute = st.executeUpdate("CREATE TABLE IF NOT EXISTS movies (id INTEGER PRIMARY KEY,title TEXT, originalTitle TEXT , releaseYear INTEGER, duration  INTEGER, genre TEXT,country TEXT,director TEXT, actors TEXT, synopsis TEXT,  poster BLOB, grade INTEGER, comment TEXT );");
-                int execute1 = st.executeUpdate("CREATE TABLE IF NOT EXISTS series (id INTEGER PRIMARY KEY,title TEXT, originalTitle TEXT , releaseYear INTEGER, duration  INTEGER, genre TEXT,country TEXT,director TEXT, actors TEXT, synopsis TEXT,  poster BLOB, grade INTEGER, comment TEXT, season INTEGER, episode INTEGER );");
+                int execute = st.executeUpdate("CREATE TABLE IF NOT EXISTS movies (id INTEGER PRIMARY KEY,title TEXT, originalTitle TEXT , releaseYear INTEGER, filePath TEXT, fileName TEXT, duration  INTEGER, genre TEXT,country TEXT,director TEXT, actors TEXT, synopsis TEXT,  poster BLOB, grade INTEGER, comment TEXT );");
+                int execute1 = st.executeUpdate("CREATE TABLE IF NOT EXISTS series (id INTEGER PRIMARY KEY,title TEXT, originalTitle TEXT , releaseYear INTEGER, filePath TEXT, fileName TEXT, duration  INTEGER, genre TEXT,country TEXT,director TEXT, actors TEXT, synopsis TEXT,  poster BLOB, grade INTEGER, comment TEXT, season INTEGER, episode INTEGER );");
 
                 System.out.println(execute);
                 System.out.println(execute1);
@@ -54,7 +54,7 @@ public class SQLite {
                 st = con.createStatement();
                 film.setTitle(film.getTitle().replace(' ', '_')); 
                 System.out.println(film.getTitle());
-                int execute = st.executeUpdate("INSERT INTO movies(id,title) VALUES (\'"+film.getFilmID()+"\',\'"+film.getTitle()+"\')");
+                int execute = st.executeUpdate("INSERT INTO movies(id,title, filePath, fileName) VALUES (\'"+film.getFilmID()+"\',\'"+film.getTitle()+"\',\'"+film.getFilePath()+"\',\'"+film.getFileName()+"\')");
 
         }
         catch(Exception e){
@@ -73,7 +73,7 @@ public class SQLite {
                 st = con.createStatement();
                 serie.setTitle(serie.getTitle().replace(' ', '_'));
                 System.out.println(serie.getTitle());
-                String query = "INSERT INTO series(title, season, episode) VALUES(\'"+serie.getTitle()+"\',\'"+serie.getSeason()+"\',\'"+serie.getEpisode()+"\')";
+                String query = "INSERT INTO series(title, season, episode) VALUES(\'"+serie.getTitle()+"\',\'"+serie.getSeason()+"\',\'"+serie.getEpisode()+"\',\'"+serie.getFileName()+"\')";
                 int execute = st.executeUpdate(query);
                 System.out.println(query);
 
@@ -144,9 +144,13 @@ public class SQLite {
 
                    String title = rs.getString("title");
                    
+                   String path = rs.getString("filePath");
+                   
+                   String fileName = rs.getString("fileName");
+                   
                    title = title.replace('_', ' ');
 
-                   filmsFromDB.add(new Film(id, title));
+                   filmsFromDB.add(new Film(id, title, path, fileName));
                 }
                 rs.close();
                 stmt.close();
@@ -184,10 +188,12 @@ public class SQLite {
 
                    int id = rs.getInt("id");
                    String title = rs.getString("title");
+                   String path = rs.getString("filePath");
+                   String fileName = rs.getString("fileName");
                    int season = rs.getInt("season");
                    int episode = rs.getInt("episode");
                    title = title.replace('_', ' ');
-                   seriesFromDB.add(new Serie(id, title, season, episode));
+                   seriesFromDB.add(new Serie(id, title, path, fileName, season, episode));
 
 
                 }

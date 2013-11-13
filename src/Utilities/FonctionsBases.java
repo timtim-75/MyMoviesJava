@@ -28,7 +28,36 @@ public class FonctionsBases {
     static String interdit[] = {"YIFY", "x264", "1080p", "720p", "bluray", "brrip", "dvdrip","r5","srt", "extended", "cut", "director", "gaz", "axxo", "[www","Cpasbien","me]","unrated","limited","xvid-sparks","xvid-fwd", "ac3-314r", "dvdr","r4","dvdscr","TS", "ntsc","french","xvid-qcp", "mp4","avi","mkv","mov","mpg","mpa","wma","vob", }; 
     static String dbPath="/Users/timotheegrosjean/Desktop/films.db";
     static File pathDatas;
+    static String defaultPlayer = "/Applications/VLC.app/Contents/MacOS/VLC ";
+    static String defaultDirectory = " /Users/timotheegrosjean/Desktop/MyMovies";
     
+    
+    public static void moveFile(String path, String newName) throws IOException
+    {
+        Runtime runtime = Runtime.getRuntime();
+        runtime.exec("mv "+path+defaultDirectory);
+    }
+    
+    public static String getDefaultDirectory()
+    {
+        return defaultDirectory;
+    }
+    public static void makeDirectory() throws IOException
+    {
+        if(!new File (defaultDirectory).exists())
+        {
+            new File(defaultDirectory).mkdir();
+        }
+    }
+    public static String getDefaultPlayer()
+    {
+        return defaultPlayer; 
+    }
+    
+    public static void setDefaultPlayer(String defaultPlayer1)
+    {
+        defaultPlayer = defaultPlayer1;
+    }
     public static String getDBPath()
     {
         return dbPath;
@@ -163,6 +192,7 @@ public class FonctionsBases {
 
         return answer;
     }
+    
     
     
     

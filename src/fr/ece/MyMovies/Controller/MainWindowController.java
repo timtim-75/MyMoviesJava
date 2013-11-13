@@ -16,7 +16,10 @@ import fr.ece.MyMovies.Vue.MainWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -32,9 +35,10 @@ public class MainWindowController {
     private AllFilms bibliotheque = new AllFilms();
     
     
-    public MainWindowController(){
+    public MainWindowController() throws IOException{
         
         bibliotheque.initFromDB();
+        FonctionsBases.makeDirectory();
         
         
         mainWindow = new MainWindow(bibliotheque);
@@ -56,11 +60,18 @@ public class MainWindowController {
                     if(FonctionsBases.isFilm(choisirVideo.getSelectedFile().getName()))
                     {
                         film.setFileName(choisirVideo.getSelectedFile().getName());
-                        film.setFilePath(choisirVideo.getSelectedFile().getAbsolutePath());
+                        film.setFileName(choisirVideo.getSelectedFile().getName());
+                        
+                        film.setFilePath(FonctionsBases.getDefaultDirectory()+"/"+film.getFileName());
                         System.out.println(film.getFilePath());
                         film.setTitle(FonctionsBases.reTitleFilm(film.getFileName()));
                         film.setFilmID(bibliotheque.getLastFilmID()+1);
                         bibliotheque.setLastFilmID(bibliotheque.getLastFilmID()+1);
+                        try {
+                            FonctionsBases.moveFile(choisirVideo.getSelectedFile().getAbsolutePath(), film.getTitle() );
+                        } catch (IOException ex) {
+                            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         System.out.println(film.getTitle());
                         SQLite.addFilm(film);
                         bibliotheque.addFilm(film);
@@ -112,7 +123,7 @@ public class MainWindowController {
                 choisirSousTitres.setFileFilter(new FileNameExtensionFilter("Fichier Sous-Titres", "ssa","srt","txt","sub"));
                 if (choisirSousTitres.showOpenDialog(null)== JFileChooser.APPROVE_OPTION) 
                 {
-
+                       
                 }
             }
             
@@ -122,8 +133,28 @@ public class MainWindowController {
             
             public void actionPerformed(ActionEvent e) {
                 
+                String path ="";
                 
-            
+                
+            switch(mainWindow.getSelectedTab()){
+                    case 0:
+                try {
+                    
+                    bibliotheque.playFilm(mainWindow.getTabFilmsSelectedRows());
+                } catch (IOException ex) {
+                    Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                        break;
+                    case 1:
+                try {
+                    bibliotheque.playSerie(mainWindow.getTabSeriesSelectedRows());
+                } catch (IOException ex) {
+                    Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                        break;
+                    default:
+                        break;
+                }
             }
             
         });

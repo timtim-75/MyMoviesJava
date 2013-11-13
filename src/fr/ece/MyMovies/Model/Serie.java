@@ -15,10 +15,12 @@ public class Serie extends Film{
     int episode;
     String name;
     
-    public Serie(int filmID1,String name1, int season1, int episode1)
+    public Serie(int filmID1, String name1, String path1,String fileName1, int season1, int episode1)
     {
         this.filmID = filmID1;
         this.title = name1;
+        this.fileName = fileName1;
+        this.filePath = path1;
         this.season = season1;
         this.episode = episode1;
     }

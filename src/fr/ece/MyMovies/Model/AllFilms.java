@@ -5,6 +5,7 @@
 package fr.ece.MyMovies.Model;
 import Utilities.FonctionsBases;
 import Utilities.SQLite;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -114,6 +115,25 @@ public class AllFilms {
     public void setLastSerieID(int lastSerieID1)
     {
         lastSerieID = lastSerieID1;
+    }
+    
+    public void playFilm(int[] index) throws IOException
+    {
+        Runtime runtime = Runtime.getRuntime();
+        
+        String defaultPlayer = FonctionsBases.getDefaultPlayer();
+        
+        runtime.exec(defaultPlayer+filmsModele.getFilms().get(index[0]) .getFilePath());
+        System.out.println(filmsModele.getFilms().get(index[0]) .getFilePath());
+    }
+    
+    
+    
+    public void playSerie(int index[]) throws IOException
+    {
+        Runtime runtime = Runtime.getRuntime();
+        String defaultPlayer = FonctionsBases.getDefaultPlayer();
+        runtime.exec(defaultPlayer + seriesModele.getSeries().get(index[0]).getFilePath());
     }
     //Constructeur
     public AllFilms()
