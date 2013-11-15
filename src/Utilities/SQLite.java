@@ -54,7 +54,7 @@ public class SQLite {
                 st = con.createStatement();
                 film.setTitle(film.getTitle().replace(' ', '_')); 
                 System.out.println(film.getTitle());
-                int execute = st.executeUpdate("INSERT INTO movies(id,title, filePath, fileName) VALUES (\'"+film.getFilmID()+"\',\'"+film.getTitle()+"\',\'"+film.getFilePath()+"\',\'"+film.getFileName()+"\')");
+                int execute = st.executeUpdate("INSERT INTO movies(id,title,originalTitle,releaseYear, filePath, fileName, duration, genre, country, director, actors, synopsis, poster, grade, comment ) VALUES (\'"+film.getFilmID()+"\',\'"+film.getTitle()+"\',\'"+film.getOriginalTitle()+"\',\'"+film.getReleaseYear()+"\',\'"+film.getFilePath()+"\',\'"+film.getFileName()+"\',\'"+film.getDuration()+"\',\'"+film.getGenre()+"\',\'"+film.getCountry()+"\',\'"+film.getDirector()+"\',\'"+film.getActors()+"\',\'"+film.getSynopsis()+"\',\'"+film.getPoster()+"\',\'"+film.getGrade()+"\',\'"+film.getComments()+"\')");
 
         }
         catch(Exception e){
@@ -73,7 +73,7 @@ public class SQLite {
                 st = con.createStatement();
                 serie.setTitle(serie.getTitle().replace(' ', '_'));
                 System.out.println(serie.getTitle());
-                String query = "INSERT INTO series(title, season, episode) VALUES(\'"+serie.getTitle()+"\',\'"+serie.getSeason()+"\',\'"+serie.getEpisode()+"\',\'"+serie.getFileName()+"\')";
+                String query = "INSERT INTO series(id,title,originalTitle,releaseYear, filePath, fileName, duration, genre, country, director, actors, synopsis, poster, grade, comment ) VALUES (\'"+serie.getFilmID()+"\',\'"+serie.getTitle()+"\',\'"+serie.getOriginalTitle()+"\',\'"+serie.getReleaseYear()+"\',\'"+serie.getFilePath()+"\',\'"+serie.getFileName()+"\',\'"+serie.getDuration()+"\',\'"+serie.getGenre()+"\',\'"+serie.getCountry()+"\',\'"+serie.getDirector()+"\',\'"+serie.getActors()+"\',\'"+serie.getSynopsis()+"\',\'"+serie.getPoster()+"\',\'"+serie.getGrade()+"\',\'"+serie.getComments()+"\')";
                 int execute = st.executeUpdate(query);
                 System.out.println(query);
 
@@ -123,6 +123,7 @@ public class SQLite {
     {
         ArrayList<Film> filmsFromDB = new ArrayList<>();
         
+        Film film = new Film();
         Statement stmt = null;
         
         try{
@@ -141,16 +142,23 @@ public class SQLite {
 
 
                    int id = rs.getInt("id");
-
                    String title = rs.getString("title");
-                   
+                   String originalTitle = rs.getString("originalTitle");
+                   int releaseYear = rs.getInt("releaseYear");
                    String path = rs.getString("filePath");
-                   
                    String fileName = rs.getString("fileName");
+                   int duration = rs.getInt("duration");
+                   String genre = rs.getString(("genre"));
+                   String country = rs.getString("country");
+                   String director = rs.getString("director");
+                   String actors = rs.getString("actors");
+                   String synopsis = rs.getString("synopsis");
+                   String poster = rs.getString("poster");
+                   int grade = rs.getInt("grade");
+                   String comments = rs.getString("comment");
                    
-                   title = title.replace('_', ' ');
 
-                   filmsFromDB.add(new Film(id, title, path, fileName));
+                   filmsFromDB.add(new Film(id, title, originalTitle, releaseYear,duration,  path, fileName,  genre, country, director, actors, synopsis, poster, grade, comments));
                 }
                 rs.close();
                 stmt.close();

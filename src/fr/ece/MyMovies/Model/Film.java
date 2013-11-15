@@ -21,30 +21,41 @@ public class Film {
     int filmID;
     int releaseYear;
     int duration;
-    ArrayList<String> genre;
-    ArrayList<String> country;
+    String genre;
+    String country;
     
     // Réalisateur(s)
-    ArrayList<String> director;
+    String director;
     
     // Acteur(s)
-    ArrayList<String> actors;
+    String actors;
     
     // Synopsis
     String synopsis;
     
     // Affiche du film
-    Image poster;
+    String poster;
     
     //Commentaires & Note
     int grade;
-    ArrayList<String> comments;
+    String comments;
     
     //Informations du fichier vidéo
     String fileName;
     String filePath;
+    String subtitle;
     
     //Getter & Setter
+    
+    public String getSubtitle()
+    {
+        return subtitle;
+    }
+    
+    public void setSubtitle(String subtitle1)
+    {
+        subtitle=subtitle1;
+    }
     public String getTitle()
     {  
         return title;
@@ -77,35 +88,35 @@ public class Film {
     {
         duration = duration1;
     }   
-    public ArrayList<String> getGenre()
+    public String getGenre()
     {
         return genre;
     }   
-    public void setGenre(ArrayList<String> genre1)
+    public void setGenre(String genre1)
     {
         genre = genre1;
     }   
-    public ArrayList<String> getCountry()
+    public String getCountry()
     {
         return country;
     }    
-    public void setCountry(ArrayList<String> country1)
+    public void setCountry(String country1)
     {
         country = country1;
     }   
-    public ArrayList<String> getDirector()
+    public String getDirector()
     {
         return director;
     }    
-    public void setDirector(ArrayList<String> director1)
+    public void setDirector(String director1)
     {
         director = director1;
     }
-    public ArrayList<String> getActors()
+    public String getActors()
     {
         return actors;
     }  
-    public void setActors(ArrayList<String> actors1)
+    public void setActors(String actors1)
     {
         actors = actors1;
     }   
@@ -117,11 +128,11 @@ public class Film {
     {
         synopsis = synopsis1;
     }
-    public Image getPoster()
+    public String getPoster()
     {
         return poster;
     }
-    public void setPoster(Image poster1)
+    public void setPoster(String poster1)
     {
         poster = poster1;
     }
@@ -133,11 +144,11 @@ public class Film {
     {
         grade = grade1;
     }
-    public ArrayList<String> getComments()
+    public String getComments()
     {
         return comments;
     }
-    public void setComments(ArrayList<String> comments1)
+    public void setComments(String comments1)
     {
         comments = comments1;
     }
@@ -184,12 +195,23 @@ public class Film {
         comments = null;
     }
     
-    public Film(int id1,String title1, String path1, String fileName1)
+    public Film(int id1,String title1, String originalTitle1, int releaseYear1, int duration1, String path1, String fileName1, String genre1,String country1, String director1, String actors1,String poster1, String synopsis1, int grade1, String comments1)
     {
         filmID = id1;
         title = title1;
+        originalTitle = originalTitle1;
         filePath = path1;
         fileName = fileName1;
+        releaseYear = releaseYear1;
+        duration = duration1;
+        genre = genre1;
+        country = country1;
+        director = director1;
+        actors = actors1;
+        synopsis = synopsis1;
+        poster = poster1;
+        grade = grade1;
+        comments = comments1;
         
     }
     

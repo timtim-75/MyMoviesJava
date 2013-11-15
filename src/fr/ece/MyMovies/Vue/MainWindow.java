@@ -59,9 +59,9 @@ public class MainWindow extends JFrame{
     private void build(){
         
 		this.setTitle("MyMovies"); //On donne un titre à l'application
-		this.setSize(800,600); //On donne une taille à notre fenêtre
+		this.setSize(1000,600); //On donne une taille à notre fenêtre
 		this.setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
-		this.setResizable(true) ; //On interdit la redimensionnement de la fenêtre
+		this.setResizable(true) ; //On autorise la redimensionnement de la fenêtre
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //On dit à l'application de se fermer
                 
                 
@@ -69,6 +69,8 @@ public class MainWindow extends JFrame{
                 tabs = new JTabbedPane();
                 panelFilms = new JPanel();
                 panelSeries = new JPanel();
+                panelFilms.setLayout(new BorderLayout());
+                panelSeries.setLayout(new BorderLayout());
                 tableauSeries = new JTable(seriesModele);
                 tableauFilms = new JTable(filmsModele);
                 
@@ -108,10 +110,10 @@ public class MainWindow extends JFrame{
                 barreMenu.add(boutons);
                 barreMenu.add(search);
 
-                fond.setLayout(new BorderLayout());
-                fond.setBackground(Color.black);
-                fond.add(tabs, BorderLayout.CENTER);
+                fond.setLayout(new BorderLayout()); 
                 fond.add(barreMenu,BorderLayout.NORTH);
+                fond.add(tabs, BorderLayout.CENTER);
+                
                 
                 this.add(fond);
     }

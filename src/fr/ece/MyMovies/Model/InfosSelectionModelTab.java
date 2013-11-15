@@ -4,28 +4,27 @@
  */
 package fr.ece.MyMovies.Model;
 
-import Utilities.SQLite;
-import javax.swing.table.*;
-import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author timotheegrosjean
  */
-public class FilmsModelTab extends AbstractTableModel{
+public class InfosSelectionModelTab extends AbstractTableModel{
     
     private ArrayList<Film>  films = new ArrayList<Film>();
-    private final String[] entetesFilms = {"ID", "Titre"};
+    private final String[] entetesFilms = {"ID", "Titre", "Annee de Sortie", "Synopsis"};
     
-    public FilmsModelTab(ArrayList<Film> filmsFromDB)
+    public InfosSelectionModelTab(ArrayList<Film> returnFilms)
     {
         super();
         
-        for(Film film : filmsFromDB)
+        for(Film film : returnFilms)
         {
             films.add(film);  
         }
+        
 
     }
     
@@ -60,6 +59,12 @@ public class FilmsModelTab extends AbstractTableModel{
                 return films.get(rowIndex).getFilmID();
             case 1 :
                 return films.get(rowIndex).getTitle();
+                
+            case 2 :
+                return films.get(rowIndex).getReleaseYear();
+                
+            case 3 :
+                return films.get(rowIndex).getSynopsis();
 
             default : 
                 return null;
@@ -67,5 +72,5 @@ public class FilmsModelTab extends AbstractTableModel{
         }
        
     }
-
+    
 }

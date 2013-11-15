@@ -37,14 +37,20 @@ public class AllFilms {
     }
     
     public void addSerie(Serie serie){
+        
+        SQLite.addSerie(serie);
         seriesModele.getSeries().add(serie);
         seriesModele.fireTableRowsInserted(seriesModele.getSeries().size() -1, seriesModele.getSeries().size() -1);
+        
     }
     
     public void addFilm(Film film){
         
+        SQLite.addFilm(film);
         filmsModele.getFilms().add(film);
+        film.setTitle(film.getTitle().replace('_', ' '));
         filmsModele.fireTableRowsInserted(filmsModele.getFilms().size()-1, filmsModele.getFilms().size()-1);
+        
         
     }
     
@@ -127,7 +133,27 @@ public class AllFilms {
         System.out.println(filmsModele.getFilms().get(index[0]) .getFilePath());
     }
     
+    public void addToFilmsubtitle(int[] index, String path) throws IOException
+    {
+        Runtime runtime = Runtime.getRuntime();
+        
+        filmsModele.getFilms().get(index[0]).setSubtitle(FonctionsBases.replaceSRT(filmsModele.getFilms().get(index[0]).getFileName()));
+
+        runtime.exec("mv "+path+" "+FonctionsBases.getDefaultDirectory()+"/"+filmsModele.getFilms().get(index[0]) .getSubtitle());
+        
+        System.out.println(filmsModele.getFilms().get(index[0]) .getSubtitle());
+    }
     
+    public void addToSeriesubtitle(int[] index, String path) throws IOException
+    {
+        Runtime runtime = Runtime.getRuntime();
+        
+        seriesModele.getSeries().get(index[0]).setSubtitle(FonctionsBases.replaceSRT(seriesModele.getSeries().get(index[0]).getFileName()));
+
+        runtime.exec("mv "+path+" "+FonctionsBases.getDefaultDirectory()+"/"+seriesModele.getSeries().get(index[0]) .getSubtitle());
+        
+        System.out.println(filmsModele.getFilms().get(index[0]) .getSubtitle());
+    }
     
     public void playSerie(int index[]) throws IOException
     {

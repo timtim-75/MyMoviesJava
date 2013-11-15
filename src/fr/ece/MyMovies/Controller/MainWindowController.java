@@ -7,6 +7,7 @@ package fr.ece.MyMovies.Controller;
 import Utilities.FonctionsBases;
 import Utilities.ObjectSerie;
 import Utilities.SQLite;
+import Utilities.TMDB;
 import fr.ece.MyMovies.Model.AllFilms;
 import fr.ece.MyMovies.Model.Film;
 import fr.ece.MyMovies.Model.FilmsModelTab;
@@ -18,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -29,6 +32,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class MainWindowController {
     private MainWindow mainWindow;
+    InfoSelectionWindowController filmSelection;
     
     
     
@@ -39,6 +43,7 @@ public class MainWindowController {
         
         bibliotheque.initFromDB();
         FonctionsBases.makeDirectory();
+        
         
         
         mainWindow = new MainWindow(bibliotheque);
@@ -56,14 +61,15 @@ public class MainWindowController {
                 {
 
                     Film film = new Film();
+                    ArrayList<String> tmpID = new ArrayList<>();
                     File fichier = choisirVideo.getSelectedFile();
                     if(FonctionsBases.isFilm(choisirVideo.getSelectedFile().getName()))
                     {
                         film.setFileName(choisirVideo.getSelectedFile().getName());
-                        film.setFileName(choisirVideo.getSelectedFile().getName());
+                        //film.setFileName(choisirVideo.getSelectedFile().getName());
                         
                         film.setFilePath(FonctionsBases.getDefaultDirectory()+"/"+film.getFileName());
-                        System.out.println(film.getFilePath());
+                        //System.out.println(film.getFilePath());
                         film.setTitle(FonctionsBases.reTitleFilm(film.getFileName()));
                         film.setFilmID(bibliotheque.getLastFilmID()+1);
                         bibliotheque.setLastFilmID(bibliotheque.getLastFilmID()+1);
@@ -72,9 +78,20 @@ public class MainWindowController {
                         } catch (IOException ex) {
                             Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        System.out.println(film.getTitle());
-                        SQLite.addFilm(film);
-                        bibliotheque.addFilm(film);
+                        //System.out.println(film.getTitle());
+                        
+                        ;
+                        try {
+                           filmSelection = new InfoSelectionWindowController(FonctionsBases.parseJSON(TMDB.sendIDSQuery(TMDB.makeIDSQuery(FonctionsBases.getFilmsID(TMDB.sendQuery(TMDB.makeFirstQuery(film.getTitle()))))), film.getFilmID()), bibliotheque);
+                        } catch (MalformedURLException ex) {
+                            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        //FonctionsBases.useResponse(null);
+                        //SQLite.addFilm(film);
+                        //bibliotheque.addFilm(film);
+                        
                     }
                     else 
                     {
@@ -120,12 +137,40 @@ public class MainWindowController {
 
             public void actionPerformed(ActionEvent e) {
                 JFileChooser choisirSousTitres = new JFileChooser("/Users/timotheegrosjean/Desktop");
-                choisirSousTitres.setFileFilter(new FileNameExtensionFilter("Fichier Sous-Titres", "ssa","srt","txt","sub"));
-                if (choisirSousTitres.showOpenDialog(null)== JFileChooser.APPROVE_OPTION) 
-                {
-                       
+                
+                switch(mainWindow.getSelectedTab()){
+                    case 0:
+                        
+                        choisirSousTitres.setFileFilter(new FileNameExtensionFilter("Fichier Sous-Titres", "ssa","srt","txt","sub"));
+                        if (choisirSousTitres.showOpenDialog(null)== JFileChooser.APPROVE_OPTION) 
+                        {
+                           String path = choisirSousTitres.getSelectedFile().getAbsolutePath();
+
+                            try {
+                                bibliotheque.addToFilmsubtitle(mainWindow.getTabFilmsSelectedRows(), path);
+                            } 
+                            catch (IOException ex) {
+                                Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    case 1:
+                        
+                        
+                        choisirSousTitres.setFileFilter(new FileNameExtensionFilter("Fichier Sous-Titres", "ssa","srt","txt","sub"));
+                        if (choisirSousTitres.showOpenDialog(null)== JFileChooser.APPROVE_OPTION) 
+                        {
+                           String path = choisirSousTitres.getSelectedFile().getAbsolutePath();
+
+                            try {
+                                bibliotheque.addToSeriesubtitle(mainWindow.getTabSeriesSelectedRows(), path);
+                            } 
+                            catch (IOException ex) {
+                                Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
                 }
             }
+            
             
         });
         

@@ -4,6 +4,8 @@
  */
 package Utilities;
 
+
+import fr.ece.MyMovies.Model.TempFilm;
 import fr.ece.MyMovies.Model.Film;
 import fr.ece.MyMovies.Model.Serie;
 import java.io.BufferedReader;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+
 /**
  *
  * @author timotheegrosjean
@@ -30,6 +33,129 @@ public class FonctionsBases {
     static File pathDatas;
     static String defaultPlayer = "/Applications/VLC.app/Contents/MacOS/VLC ";
     static String defaultDirectory = " /Users/timotheegrosjean/Desktop/MyMovies";
+    
+    
+    
+    
+    
+    
+    
+    public static ArrayList<String> getFilmsID(String response)
+    {
+        String s;
+        s = response.toString();
+        
+        
+        String[] answers;
+        String[] infos = null;
+        ArrayList<String[]> allInfos = new ArrayList<String[]>();
+        
+        ArrayList<String> ids = new ArrayList<>();
+       
+        answers = s.split("[}]+");
+        System.out.println("Reponse : "+response);
+        for(int i=0; i<answers.length; i++)
+        {
+            infos = answers[i].split("[,]+");
+            //System.out.println("Answers : "+answers[i]);
+            allInfos.add(infos);
+        }
+        for(String [] i : allInfos)
+        {
+            for(int j=0; j<i.length;j++)
+            {
+               if(i[j].matches("\"id(.*)"))
+                {
+                     String[] split= i[j].split("[:]+");
+                     split[1] = split[1].replace('\"', ' ');
+                     split[1] = split[1].trim();
+                     ids.add(split[1]);
+                     //System.out.println(ids);
+                }
+            }
+        }
+        
+        return ids;
+    }
+    
+    public static ArrayList<Film> parseJSON(ArrayList<String> responses, int filmID)
+    {   
+        
+        ArrayList<Film> tempFilms = new ArrayList<Film>();
+        Film tmpFilm;
+
+        
+        for(String s : responses)
+        {
+            tmpFilm = new Film();
+            
+            tmpFilm.setFilmID(filmID);
+            String[] infos = s.split("(,\")+");
+            
+            
+            for(int i=0; i<infos.length;i++)
+            {
+                //System.out.println(infos[i]);
+                if(infos[i].matches("title(.*)"))
+                {
+                     String[] split= infos[i].split("[:]+");
+                     split[1] = split[1].replace('\"', ' ');
+                     split[1] = split[1].trim();
+                     tmpFilm.setTitle(split[1]);
+                     System.out.println("Titre : "+tmpFilm.getTitle());  
+                }
+                
+                else if(infos[i].matches("original_title(.*)"))
+                {
+                     String[] split= infos[i].split("[:]+");
+                     split[1] = split[1].replace('\"', ' ');
+                     split[1] = split[1].trim();
+                     tmpFilm.setOriginalTitle((split[1]));
+                     System.out.println("Titre Original : "+tmpFilm.getOriginalTitle());
+                }
+                else if(infos[i].matches("release_date(.*)"))
+                {
+                     String[] split= infos[i].split("[:]+");
+                     String[] date = split[1].split("[-]+");
+                     date[0] = date[0].replace('\"', ' ');
+                     date[0] = date[0].trim();
+                     
+                     if(!date[0].equalsIgnoreCase(""))
+                     {
+                        
+                        tmpFilm.setReleaseYear(Integer.parseInt(date[0]));
+                        System.out.println("Annee : "+tmpFilm.getReleaseYear());
+                     }
+                     else tmpFilm.setReleaseYear(-1);
+                }
+                else if(infos[i].matches("overview(.*)"))
+                {
+                    
+                     String[] split= infos[i].split("[\":\"]+");
+                     if(!split[1].equalsIgnoreCase("null"))
+                     {
+                        split[1] = split[1].replace('\"', ' ');
+                        split[1] = split[1].trim();
+                     }
+                     else split[1] = "Pas de Synopsis disponible pour ce film";
+                     
+                     tmpFilm.setSynopsis(split[1]);
+                     System.out.println("Synopsis : "+tmpFilm.getSynopsis());
+                }
+                
+                else if(infos[i].matches("poster_path(.*)"))
+                {
+                     String[] split= infos[i].split("[:]+");
+                     split[1] = split[1].replace('\"', ' ');
+                     split[1] = split[1].trim();
+                     tmpFilm.setPoster((split[1]));
+                     System.out.println("Poster : "+tmpFilm.getPoster());
+                }
+            }
+            tempFilms.add(tmpFilm);
+        }
+        return tempFilms;
+    }
     
     
     public static void moveFile(String path, String newName) throws IOException
@@ -93,7 +219,11 @@ public class FonctionsBases {
                 if(decoupe[j].equalsIgnoreCase(interdit[i]) == true)
                 {
                     decoupe[j]="";
-                }   
+                }
+                if(decoupe[j].matches(".*\\d"))
+                {
+                    decoupe[j]="";
+                }
             }
         }
         String newName = decoupe[0];
@@ -105,6 +235,7 @@ public class FonctionsBases {
         
         filmTitle = newName.replace('.',' ');
         filmTitle = filmTitle.trim();
+        //System.out.println(filmTitle);
         
         
         return filmTitle;
@@ -179,7 +310,15 @@ public class FonctionsBases {
         if(serieToDelete != null) list.remove(serieToDelete);
     }
     
-    
+    public static String replaceSRT(String s)
+    {
+        s=s.replace("mp4", "srt");
+        s=s.replace("avi", "srt");
+        s=s.replace("mov", "srt");
+        s=s.replace("mkv", "srt");
+        return s;
+        
+    }
     
     public static boolean isFilm(String fileName)
     {
@@ -191,6 +330,36 @@ public class FonctionsBases {
             answer=false;
 
         return answer;
+    }
+    
+    public static Film underscoreAllString(Film film)
+    {
+        film.setActors(film.getActors().replace(' ', '_'));
+        film.setComments(film.getComments().replace(' ', '_'));
+        film.setCountry(film.getCountry().replace(' ', '_'));
+        film.setDirector(film.getDirector().replace(' ', '_'));
+        film.setFileName(film.getFileName().replace(' ', '_'));
+        film.setGenre(film.getGenre().replace(' ', '_'));
+        film.setOriginalTitle(film.getOriginalTitle().replace(' ', '_'));
+        film.setPoster(film.getPoster().replace(' ', '_'));
+        film.setSynopsis(film.getSynopsis().replace(' ', '_'));
+        film.setTitle(film.getTitle().replace(' ', '_'));
+        return film;
+    }
+    
+    public static Film spaceAllString(Film film)
+    {
+        film.setActors(film.getActors().replace('_', ' '));
+        film.setComments(film.getComments().replace('_', ' '));
+        film.setCountry(film.getCountry().replace('_', ' '));
+        film.setDirector(film.getDirector().replace('_', ' '));
+        film.setFileName(film.getFileName().replace('_', ' '));
+        film.setGenre(film.getGenre().replace('_', ' '));
+        film.setOriginalTitle(film.getOriginalTitle().replace('_', ' '));
+        film.setPoster(film.getPoster().replace('_', ' '));
+        film.setSynopsis(film.getSynopsis().replace('_', ' '));
+        film.setTitle(film.getTitle().replace('_', ' '));
+        return film;
     }
     
     
