@@ -46,9 +46,12 @@ public class AllFilms {
     
     public void addFilm(Film film){
         
+        film.setSynopsis(film.getSynopsis().replace('\'','+'));
         SQLite.addFilm(film);
         filmsModele.getFilms().add(film);
         film.setTitle(film.getTitle().replace('_', ' '));
+        
+        System.out.println(film.getSynopsis());
         filmsModele.fireTableRowsInserted(filmsModele.getFilms().size()-1, filmsModele.getFilms().size()-1);
         
         

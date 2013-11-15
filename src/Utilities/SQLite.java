@@ -157,6 +157,20 @@ public class SQLite {
                    int grade = rs.getInt("grade");
                    String comments = rs.getString("comment");
                    
+                   title = title.replace('_', ' ');
+                   originalTitle = originalTitle.replace('_', ' ');
+                   path = path.replace('_', ' ');
+                   fileName = fileName.replace('_', ' ');
+                   genre = genre.replace('_', ' ');
+                   country = country.replace('_', ' ');
+                   director = director.replace('_', ' ');
+                   actors = actors.replace('_', ' ');
+                   synopsis = synopsis.replace('_', ' ');
+                   synopsis = synopsis.replace('+', '\'');
+                   poster = poster.replace('_', ' ');
+                   comments = comments.replace('_', ' ');
+                   
+                   
 
                    filmsFromDB.add(new Film(id, title, originalTitle, releaseYear,duration,  path, fileName,  genre, country, director, actors, synopsis, poster, grade, comments));
                 }

@@ -207,6 +207,8 @@ public class MainWindowController {
         
         mainWindow.setVisible(true);
         
+        
+        
     }
     
 }

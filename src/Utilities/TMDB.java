@@ -18,6 +18,9 @@ import java.util.ArrayList;
  */
 public class TMDB {
     
+    
+    static String image = "http://d3gtl9l2a4fn1j.cloudfront.net/t/p/";
+    static String width = "w92";
     static String apiKey = "?api_key=194d36d0fbb5e0db1b04fd0ffe4fff1c";
     static String tmdb = "http://api.themoviedb.org/3/";
     static String search = "search/movie";
@@ -166,6 +169,13 @@ public class TMDB {
                 return response.toString();
  
 	}
+    
+    public static String makePosterQuery(String posterPath)
+    {
+        String poster = image + width + posterPath;
+        
+        return poster;
+    }
 }
     
     
