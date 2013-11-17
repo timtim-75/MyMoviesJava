@@ -78,7 +78,7 @@ public class FonctionsBases {
         return ids;
     }
     
-    public static ArrayList<Film> parseJSON(ArrayList<String> responses, int filmID)
+    public static ArrayList<Film> parseJSON(ArrayList<String> responses, int filmID, String filePath, String fileName )
     {   
         
         ArrayList<Film> tempFilms = new ArrayList<Film>();
@@ -89,6 +89,8 @@ public class FonctionsBases {
         {
             tmpFilm = new Film();
             
+            tmpFilm.setFilePath(filePath);
+            tmpFilm.setFileName(fileName);
             tmpFilm.setFilmID(filmID);
             String[] infos = s.split("(,\")+");
             
@@ -312,10 +314,12 @@ public class FonctionsBases {
     
     public static String replaceSRT(String s)
     {
+        System.out.println(s);
         s=s.replace("mp4", "srt");
         s=s.replace("avi", "srt");
         s=s.replace("mov", "srt");
         s=s.replace("mkv", "srt");
+        System.out.println(s);
         return s;
         
     }

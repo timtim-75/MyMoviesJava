@@ -20,7 +20,7 @@ public class TMDB {
     
     
     static String image = "http://d3gtl9l2a4fn1j.cloudfront.net/t/p/";
-    static String width = "w92";
+    static String width = "w185";
     static String apiKey = "?api_key=194d36d0fbb5e0db1b04fd0ffe4fff1c";
     static String tmdb = "http://api.themoviedb.org/3/";
     static String search = "search/movie";

@@ -3,9 +3,11 @@
  * and open the template in the editor.
  */
 package fr.ece.MyMovies.Model;
+import fr.ece.MyMovies.Vue.FicheFilmPanel;
 import Utilities.FonctionsBases;
 import Utilities.SQLite;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.*;
 
 /**
@@ -16,8 +18,20 @@ public class AllFilms {
     
     private FilmsModelTab filmsModele;
     private SeriesModelTab seriesModele;
+    //private FicheFilmPanel ficheFilmModele;
     private int lastFilmID;
     private int lastSerieID;
+    
+    
+    
+    /*public FicheFilmPanel getFicheFilmModele()
+    {
+        return ficheFilmModele;
+    }
+    public void setFicheFilmModele(FicheFilmPanel ficheFilmModele1)
+    {
+        ficheFilmModele = ficheFilmModele1;
+    }*/
     
     public FilmsModelTab getFilmotheque()
     {  
@@ -86,11 +100,12 @@ public class AllFilms {
         }
         
     }
-    public void initFromDB()
+    public void initFromDB() throws MalformedURLException, IOException
     {
         SQLite.CreateTable();
         seriesModele = new SeriesModelTab(SQLite.getSeriesFromDB());
         filmsModele = new FilmsModelTab(SQLite.getFilmsFromDB());
+        //ficheFilmModele = new FicheFilmPanel();
         if(filmsModele.getFilms().size() == 0)
         {
             lastFilmID=0;
@@ -142,7 +157,9 @@ public class AllFilms {
         
         filmsModele.getFilms().get(index[0]).setSubtitle(FonctionsBases.replaceSRT(filmsModele.getFilms().get(index[0]).getFileName()));
 
-        runtime.exec("mv "+path+" "+FonctionsBases.getDefaultDirectory()+"/"+filmsModele.getFilms().get(index[0]) .getSubtitle());
+        runtime.exec("mv -f "+path+" "+FonctionsBases.getDefaultDirectory()+"/"+filmsModele.getFilms().get(index[0]) .getSubtitle());
+        
+        System.out.println("mv "+path+" "+FonctionsBases.getDefaultDirectory()+"/"+filmsModele.getFilms().get(index[0]) .getSubtitle());
         
         System.out.println(filmsModele.getFilms().get(index[0]) .getSubtitle());
     }
@@ -164,6 +181,9 @@ public class AllFilms {
         String defaultPlayer = FonctionsBases.getDefaultPlayer();
         runtime.exec(defaultPlayer + seriesModele.getSeries().get(index[0]).getFilePath());
     }
+    
+    
+    
     //Constructeur
     public AllFilms()
     {

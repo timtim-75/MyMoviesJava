@@ -195,7 +195,7 @@ public class Film {
         comments = null;
     }
     
-    public Film(int id1,String title1, String originalTitle1, int releaseYear1, int duration1, String path1, String fileName1, String genre1,String country1, String director1, String actors1,String poster1, String synopsis1, int grade1, String comments1)
+    public Film(int id1,String title1, String originalTitle1, int releaseYear1, int duration1, String path1, String fileName1, String genre1,String country1, String director1, String actors1, String synopsis1,String poster1, int grade1, String comments1)
     {
         filmID = id1;
         title = title1;

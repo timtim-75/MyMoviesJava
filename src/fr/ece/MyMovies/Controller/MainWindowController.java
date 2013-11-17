@@ -9,6 +9,7 @@ import Utilities.ObjectSerie;
 import Utilities.SQLite;
 import Utilities.TMDB;
 import fr.ece.MyMovies.Model.AllFilms;
+import fr.ece.MyMovies.Vue.FicheFilmPanel;
 import fr.ece.MyMovies.Model.Film;
 import fr.ece.MyMovies.Model.FilmsModelTab;
 import fr.ece.MyMovies.Model.SeriesModelTab;
@@ -16,6 +17,8 @@ import fr.ece.MyMovies.Model.Serie;
 import fr.ece.MyMovies.Vue.MainWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -39,14 +42,17 @@ public class MainWindowController {
     private AllFilms bibliotheque = new AllFilms();
     
     
+    
     public MainWindowController() throws IOException{
         
         bibliotheque.initFromDB();
+        
         FonctionsBases.makeDirectory();
         
         
         
         mainWindow = new MainWindow(bibliotheque);
+        mainWindow.createInfoFilm();
         
         // Enregistrer les listeners
         mainWindow.registerAjoutButtonListener(new ActionListener(){
@@ -66,10 +72,7 @@ public class MainWindowController {
                     if(FonctionsBases.isFilm(choisirVideo.getSelectedFile().getName()))
                     {
                         film.setFileName(choisirVideo.getSelectedFile().getName());
-                        //film.setFileName(choisirVideo.getSelectedFile().getName());
-                        
                         film.setFilePath(FonctionsBases.getDefaultDirectory()+"/"+film.getFileName());
-                        //System.out.println(film.getFilePath());
                         film.setTitle(FonctionsBases.reTitleFilm(film.getFileName()));
                         film.setFilmID(bibliotheque.getLastFilmID()+1);
                         bibliotheque.setLastFilmID(bibliotheque.getLastFilmID()+1);
@@ -82,7 +85,7 @@ public class MainWindowController {
                         
                         ;
                         try {
-                           filmSelection = new InfoSelectionWindowController(FonctionsBases.parseJSON(TMDB.sendIDSQuery(TMDB.makeIDSQuery(FonctionsBases.getFilmsID(TMDB.sendQuery(TMDB.makeFirstQuery(film.getTitle()))))), film.getFilmID()), bibliotheque);
+                           filmSelection = new InfoSelectionWindowController(FonctionsBases.parseJSON(TMDB.sendIDSQuery(TMDB.makeIDSQuery(FonctionsBases.getFilmsID(TMDB.sendQuery(TMDB.makeFirstQuery(film.getTitle()))))), film.getFilmID(), film.getFilePath(), film.getFileName()), bibliotheque);
                         } catch (MalformedURLException ex) {
                             Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (IOException ex) {
@@ -204,6 +207,25 @@ public class MainWindowController {
             
         });
                 
+        mainWindow.registerSelectionRowFilmActionListener(new MouseAdapter(){
+        
+            
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    //bibliotheque.ficheFilm(mainWindow.getTabFilmsSelectedRows());
+                    mainWindow.refreshInfoFilm();
+                    //mainWindow.revalidate();
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                
+            }
+            
+                
+        });
         
         mainWindow.setVisible(true);
         
