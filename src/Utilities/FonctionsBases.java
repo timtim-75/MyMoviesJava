@@ -85,6 +85,7 @@ public class FonctionsBases {
         Film tmpFilm;
 
         
+            
         for(String s : responses)
         {
             tmpFilm = new Film();
@@ -92,8 +93,106 @@ public class FonctionsBases {
             tmpFilm.setFilePath(filePath);
             tmpFilm.setFileName(fileName);
             tmpFilm.setFilmID(filmID);
-            String[] infos = s.split("(,\")+");
+            String[] getGenres = s.split("(:\\[)+");
+            int count = 0;
+            for(int i=0; i<getGenres.length; i++)
+            {
+                
+                System.out.println("TEST : "+getGenres[i]);
+                if(getGenres[i].matches("\\{\"id(.*)") && !getGenres[i].matches(("(.*)character(.*)"))&& !getGenres[i].matches("(.*)job(.*)"))
+                {
+                    //System.out.println(getGenres[i]);
+                    String[] cut = getGenres[i].split("\\]");
+                    String[] genres =cut[0].split(",");
+                    for(int j=0; j<genres.length;j++)
+                    {
+                        if(genres[j].matches("(.*)name(.*)") )
+                        {
+                            genres[j]=genres[j].replace("\"name\":","");
+                            genres[j]=genres[j].replace("\"","");
+                            genres[j]=genres[j].replace("}","");
+                            
+                            System.out.println(genres[j]);
+                        }
+                        else genres[j]="";
+                    }
+                    String genre = genres[1];
+                    for(int l=2;l<genres.length;l++)
+                    {
+                        if(!genres[l].isEmpty())
+                        genre = genre+", "+genres[l];
+                    }
+                    tmpFilm.setGenre(genre);
+                    System.out.println("Genre : "+genre);
+                }
+            }
             
+            String[] getCast = s.split("(:\\[)+");
+            for(int i=0; i<getCast.length; i++)
+            {
+                
+                System.out.println("TEST : "+getCast[i]);
+                if(getCast[i].matches("\\{\"id(.*)") && getCast[i].matches(("(.*)character(.*)"))&& !getCast[i].matches("(.*)job(.*)"))
+                {
+                    //System.out.println(getGenres[i]);
+                    String[] cut = getCast[i].split("\\]");
+                    String[] cast =cut[0].split(",");
+                    for(int j=0; j<cast.length;j++)
+                    {
+                        if(cast[j].matches("(.*)name(.*)") )
+                        {
+                            cast[j]=cast[j].replace("\"name\":","");
+                            cast[j]=cast[j].replace("\"","");
+                            cast[j]=cast[j].replace("}","");
+                            
+                            System.out.println(cast[j]);
+                        }
+                        else cast[j]="";
+                    }
+                    String casting = cast[1];
+                    for(int l=2;l<cast.length;l++)
+                    {
+                        if(!cast[l].isEmpty())
+                        casting = casting+", "+cast[l];
+                    }
+                    tmpFilm.setActors(casting);
+                    System.out.println("Cast : "+casting);
+                }
+            }
+            
+            String[] getDirector = s.split("(:\\[)+");
+            for(int i=0; i<getDirector.length; i++)
+            {
+                
+                System.out.println("TEST : "+getDirector[i]);
+                if(getDirector[i].matches("\\{\"id(.*)") && !getDirector[i].matches(("(.*)character(.*)"))&& getDirector[i].matches("(.*)job(.*)"))
+                {
+                    //System.out.println(getGenres[i]);
+                    String[] cut = getDirector[i].split("\\},\\{");
+                    for(int j=0; j<cut.length; j++)
+                    {
+                        if(cut[j].matches("(.*)\"Director\"(.*)"))
+                        {
+                            String[] director = cut[j].split(",");
+                            for(int k=0;k<director.length; k++)
+                            {
+                                if(director[k].matches("(.*)name(.*)"))
+                                {
+                                    director[k] = director[k].replace("\"name\":", "");
+                                    director[k] = director[k].replace("\"", "");
+                                    tmpFilm.setDirector(director[k]); 
+                                }
+                                
+                            }
+                        }    
+                                    
+                                
+                        
+                    }
+                }
+            }
+            
+            String[] infos = s.split("(,\")+");
             
             for(int i=0; i<infos.length;i++)
             {
@@ -104,7 +203,7 @@ public class FonctionsBases {
                      split[1] = split[1].replace('\"', ' ');
                      split[1] = split[1].trim();
                      tmpFilm.setTitle(split[1]);
-                     System.out.println("Titre : "+tmpFilm.getTitle());  
+                     //System.out.println("Titre : "+tmpFilm.getTitle());  
                 }
                 
                 else if(infos[i].matches("original_title(.*)"))
@@ -113,7 +212,7 @@ public class FonctionsBases {
                      split[1] = split[1].replace('\"', ' ');
                      split[1] = split[1].trim();
                      tmpFilm.setOriginalTitle((split[1]));
-                     System.out.println("Titre Original : "+tmpFilm.getOriginalTitle());
+                     //System.out.println("Titre Original : "+tmpFilm.getOriginalTitle());
                 }
                 else if(infos[i].matches("release_date(.*)"))
                 {
@@ -126,7 +225,7 @@ public class FonctionsBases {
                      {
                         
                         tmpFilm.setReleaseYear(Integer.parseInt(date[0]));
-                        System.out.println("Annee : "+tmpFilm.getReleaseYear());
+                        //System.out.println("Annee : "+tmpFilm.getReleaseYear());
                      }
                      else tmpFilm.setReleaseYear(-1);
                 }
@@ -142,7 +241,7 @@ public class FonctionsBases {
                      else split[1] = "Pas de Synopsis disponible pour ce film";
                      
                      tmpFilm.setSynopsis(split[1]);
-                     System.out.println("Synopsis : "+tmpFilm.getSynopsis());
+                     //System.out.println("Synopsis : "+tmpFilm.getSynopsis());
                 }
                 
                 else if(infos[i].matches("poster_path(.*)"))
@@ -151,7 +250,7 @@ public class FonctionsBases {
                      split[1] = split[1].replace('\"', ' ');
                      split[1] = split[1].trim();
                      tmpFilm.setPoster((split[1]));
-                     System.out.println("Poster : "+tmpFilm.getPoster());
+                     //System.out.println("Poster : "+tmpFilm.getPoster());
                 }
             }
             tempFilms.add(tmpFilm);

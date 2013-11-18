@@ -180,19 +180,19 @@ public class Film {
     //Constructeurs
     public Film()
     {
-        title = "";
+        /*title = "";
         originalTitle = "";
         filmID = 0;
         releaseYear = 0;
         duration = 0;
-        genre = null;
-        country = null;
-        director = null;
-        actors = null;
+        genre = "";
+        country = "";
+        director = "";
+        actors = "";
         synopsis = "";
-        poster = null;
+        poster = "";
         grade = 0;
-        comments = null;
+        comments = "";*/
     }
     
     public Film(int id1,String title1, String originalTitle1, int releaseYear1, int duration1, String path1, String fileName1, String genre1,String country1, String director1, String actors1, String synopsis1,String poster1, int grade1, String comments1)

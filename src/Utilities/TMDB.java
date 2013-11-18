@@ -28,6 +28,7 @@ public class TMDB {
     static String casts = "/casts";
     static String query = "&query=";
     static String language = "&language=fr";
+    static String cast = "&append_to_response=casts";
     
     static String userAgent = "Safari/7.0";
     
@@ -94,7 +95,7 @@ public class TMDB {
         
         for(String s:ids)
         {
-            idsURL.add(tmdb + movie+ s + apiKey + language );
+            idsURL.add(tmdb + movie+ s + apiKey+ cast + language );
         }
         System.out.println(idsURL);
         return idsURL;
@@ -116,8 +117,6 @@ public class TMDB {
             con.setRequestProperty("User-Agent", userAgent);
             
             int responseCode = con.getResponseCode();
-		//System.out.println("\nSending 'GET' request to URL : " + s);
-		//System.out.println("Response Code : " + responseCode);
  
 		BufferedReader in = new BufferedReader(
 		        new InputStreamReader(con.getInputStream()));
@@ -128,9 +127,6 @@ public class TMDB {
 			response.append(inputLine);
 		}
 		in.close();
- 
-		//print result
-		//System.out.println(response.toString());
                 responses.add( response.toString());
         }
         

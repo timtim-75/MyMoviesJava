@@ -86,9 +86,6 @@ public class MainWindow extends JFrame{
         filmsModele = bibliotheque.getFilmotheque();
         ficheFilmsModele = new FicheFilmPanel();
         
-        
-                
-        
         build();
 	}
 
@@ -199,6 +196,10 @@ public class MainWindow extends JFrame{
                 sousTitres = new JButton("Lier des Sous-Titres");
                 play = new JButton("Lancer la vidéo");
                 
+                sousTitres.setEnabled(false);
+                play.setEnabled(false);
+                suppression.setEnabled(false);
+                
                 boutons.add(ajout);
                 boutons.add(suppression);
                 boutons.add(sousTitres);
@@ -218,6 +219,9 @@ public class MainWindow extends JFrame{
                 fond.add(ficheFilmTab, BorderLayout.EAST);
                 
                 this.add(fond);
+                
+                this.setVisible(true);
+               
     }
     
     public void registerAjoutButtonListener(ActionListener l){
@@ -269,12 +273,19 @@ public class MainWindow extends JFrame{
         
         ficheFilmsModele.refresh(filmsModele.getFilms().get(tableauFilms.getSelectedRow()));
         ficheFilmsModele.revalidate();
+        sousTitres.setEnabled(true);
+        sousTitres.revalidate();
+        play.setEnabled(true);
+        play.revalidate();
+        suppression.setEnabled(true);
+        suppression.revalidate();
         
     }
    
     public void createInfoFilm() throws MalformedURLException, IOException
     {
-        ficheFilmsModele.create(filmsModele.getFilms().get(2));
+        ficheFilmsModele.create(filmsModele.getFilms().get(0));
+        ficheFilmsModele.revalidate();
     }
     
 }

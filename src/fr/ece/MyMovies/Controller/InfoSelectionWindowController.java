@@ -9,6 +9,7 @@ import fr.ece.MyMovies.Model.Film;
 import fr.ece.MyMovies.Model.InfosSelectionModelTab;
 import fr.ece.MyMovies.Model.TempFilm;
 import fr.ece.MyMovies.Vue.InfoSelectionWindow;
+import fr.ece.MyMovies.Vue.NoResponse;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -26,9 +27,13 @@ public class InfoSelectionWindowController {
     AllFilms bibliotheque;
     //ArrayList<Film> returnFilms;
     InfoSelectionWindow filmWindow ;
+    NoResponse empty;
+    Film film;
     
-    public InfoSelectionWindowController(final ArrayList<Film> selectedFilm, AllFilms bibliotheque1)
+    public InfoSelectionWindowController(final ArrayList<Film> selectedFilm, AllFilms bibliotheque1,Film film1)
     {
+        if(!selectedFilm.isEmpty())
+        {
         infosFilms = new InfosSelectionModelTab(selectedFilm);
         filmWindow = new InfoSelectionWindow(infosFilms);
         bibliotheque = bibliotheque1;
@@ -46,10 +51,17 @@ public class InfoSelectionWindowController {
             
         });
         
-            
-        
-        
         filmWindow.setVisible(true);
+        }
+        else
+        {
+            film=new Film();
+            film = film1;  
+            empty = new NoResponse();
+            /*System.out.println(film.getTitle());
+            System.out.println(film.getFilmID());
+            bibliotheque.addFilm(film);*/
+        }
     }
     
     public int[] getTabSelectedRows(){

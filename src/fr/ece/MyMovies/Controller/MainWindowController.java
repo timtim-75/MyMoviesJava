@@ -85,7 +85,7 @@ public class MainWindowController {
                         
                         ;
                         try {
-                           filmSelection = new InfoSelectionWindowController(FonctionsBases.parseJSON(TMDB.sendIDSQuery(TMDB.makeIDSQuery(FonctionsBases.getFilmsID(TMDB.sendQuery(TMDB.makeFirstQuery(film.getTitle()))))), film.getFilmID(), film.getFilePath(), film.getFileName()), bibliotheque);
+                           filmSelection = new InfoSelectionWindowController(FonctionsBases.parseJSON(TMDB.sendIDSQuery(TMDB.makeIDSQuery(FonctionsBases.getFilmsID(TMDB.sendQuery(TMDB.makeFirstQuery(film.getTitle()))))), film.getFilmID(), film.getFilePath(), film.getFileName()), bibliotheque, film);
                         } catch (MalformedURLException ex) {
                             Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (IOException ex) {
@@ -125,6 +125,13 @@ public class MainWindowController {
                 switch(mainWindow.getSelectedTab()){
                     case 0:
                         bibliotheque.removeFilm(mainWindow.getTabFilmsSelectedRows());
+                        try {
+                            mainWindow.createInfoFilm();
+                        } catch (MalformedURLException ex) {
+                            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         break;
                     case 1:
                         bibliotheque.removeSerie(mainWindow.getTabSeriesSelectedRows());

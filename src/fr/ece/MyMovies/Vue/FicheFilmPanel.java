@@ -34,13 +34,13 @@ public class FicheFilmPanel extends JPanel{
     private JPanel infos;
     private JPanel noteComment;
     private JTextArea synopsis;
-    private JLabel note;
-    private JLabel comment;
-    private JLabel titre;
-    private JLabel annee;
-    private JLabel realisateur;
-    private JLabel genre;
-    private JLabel pays;
+    private JTextArea note;
+    private JTextArea comment;
+    private JTextArea titre;
+    private JTextArea annee;
+    private JTextArea realisateur;
+    private JTextArea genre;
+    private JTextArea pays;
     private JPanel acteurs;
     private JLabel poster;
     private JPanel center;
@@ -61,11 +61,11 @@ public class FicheFilmPanel extends JPanel{
         infos = new JPanel();
         noteComment = new JPanel();
         
-        titre = new JLabel(film.getTitle()+" ( "+film.getOriginalTitle()+" )");
-        annee = new JLabel(Integer.toString(film.getReleaseYear()));
-        realisateur = new JLabel("Realisateur : "+film.getDirector());
-        genre = new JLabel("Genre : "+film.getGenre());
-        pays = new JLabel("Pays : "+film.getCountry());
+        titre = new JTextArea(film.getTitle()+" ( "+film.getOriginalTitle()+" )");
+        annee = new JTextArea(Integer.toString(film.getReleaseYear()));
+        realisateur = new JTextArea("Realisateur : "+film.getDirector());
+        genre = new JTextArea("Genre : "+film.getGenre());
+        pays = new JTextArea("Pays : "+film.getCountry());
         synopsis = new JTextArea("Synopsis : "+film.getSynopsis());
         synopsis.setLineWrap(true);
         synopsis.setWrapStyleWord(true);
@@ -118,11 +118,11 @@ public class FicheFilmPanel extends JPanel{
         infos = new JPanel();
         noteComment = new JPanel();
         
-        titre = new JLabel(film.getTitle()+" ( "+film.getOriginalTitle()+" )");
-        annee = new JLabel(Integer.toString(film.getReleaseYear()));
-        realisateur = new JLabel("Realisateur : "+film.getDirector());
-        genre = new JLabel("Genre : "+film.getGenre());
-        pays = new JLabel("Pays : "+film.getCountry());
+        titre = new JTextArea(film.getTitle()+" ( "+film.getOriginalTitle()+" )");
+        annee = new JTextArea(Integer.toString(film.getReleaseYear()));
+        realisateur = new JTextArea("Realisateur : "+film.getDirector());
+        genre = new JTextArea("Genre : "+film.getGenre());
+        pays = new JTextArea("Pays : "+film.getCountry());
         synopsis = new JTextArea("Synopsis : "+film.getSynopsis());
         synopsis.setLineWrap(true);
         synopsis.setWrapStyleWord(true);
@@ -179,11 +179,11 @@ public class FicheFilmPanel extends JPanel{
         infos = new JPanel();
         noteComment = new JPanel();
         
-        titre = new JLabel(film.getTitle()+" ( "+film.getOriginalTitle()+" )");
-        annee = new JLabel(Integer.toString(film.getReleaseYear()));
-        realisateur = new JLabel("Realisateur : "+film.getDirector());
-        genre = new JLabel("Genre : "+film.getGenre());
-        pays = new JLabel("Pays : "+film.getCountry());
+        titre = new JTextArea(film.getTitle()+" ( "+film.getOriginalTitle()+" )");
+        annee = new JTextArea(Integer.toString(film.getReleaseYear()));
+        realisateur = new JTextArea("Realisateur : "+film.getDirector());
+        genre = new JTextArea("Genre : "+film.getGenre());
+        pays = new JTextArea("Pays : "+film.getCountry());
         synopsis = new JTextArea("Synopsis : "+film.getSynopsis());
         synopsis.setWrapStyleWord(true);
         acteurs = new JPanel();
@@ -231,28 +231,28 @@ public class FicheFilmPanel extends JPanel{
     {
                 
                 
-                informations = new JPanel();
+                /*informations = new JPanel();
                 infos = new JPanel();
                 noteComment = new JPanel();
                 synopsis = new JTextArea("Synopsis :");
-                note = new JLabel("note : ");
-                comment = new JLabel("Comment : ");
-                titre = new JLabel("Titre : ");
-                annee = new JLabel("Annee : ");
-                realisateur = new JLabel("Realisateur : ");
-                genre = new JLabel("Genre : ");
-                pays = new JLabel("Pays");
+                note = new JTextArea("note : ");
+                comment = new JTextArea("Comment : ");
+                titre = new JTextArea("Titre : ");
+                annee = new JTextArea("Annee : ");
+                realisateur = new JTextArea("Realisateur : ");
+                genre = new JTextArea("Genre : ");
+                pays = new JTextArea("Pays");
                 acteurs = new JPanel();
                 poster = new JLabel();
                 center = new JPanel();
                 
                 //ficheFilm.setBackground(Color.white);
-                URL url = new URL("http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185/doKQhNr0kQzxsR7Tboem3Jb3Q0X.jpg");
+                /*URL url = new URL("http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185/doKQhNr0kQzxsR7Tboem3Jb3Q0X.jpg");
                 BufferedImage img = ImageIO.read(url);
 			
-		poster.setIcon(new ImageIcon(img));
+		poster.setIcon(new ImageIcon(img));*/
                         
-                this.setLayout(new BorderLayout());
+                /*this.setLayout(new BorderLayout());
                 infos.setLayout(new GridLayout(6,1));
                 
                 infos.add(titre);
@@ -281,7 +281,9 @@ public class FicheFilmPanel extends JPanel{
                 this.add(synopsis, BorderLayout.CENTER);
                 
                 noteComment.setBackground(Color.yellow);
-                this.add(noteComment, BorderLayout.SOUTH);
+                this.add(noteComment, BorderLayout.SOUTH);*/
+                
+                
     }
 
     
