@@ -113,6 +113,8 @@ public class MainWindow extends JFrame{
                 panelSeries.setLayout(new BorderLayout());
                 tableauSeries = new JTable(seriesModele);
                 tableauFilms = new JTable(filmsModele);
+                /*tableauSeries.setAutoCreateRowSorter(true);
+                tableauFilms.setAutoCreateRowSorter(true);*/
                 panelFilms.add(new JScrollPane(tableauFilms),BorderLayout.CENTER);
                 panelSeries.add(new JScrollPane(tableauSeries), BorderLayout.CENTER);
                 

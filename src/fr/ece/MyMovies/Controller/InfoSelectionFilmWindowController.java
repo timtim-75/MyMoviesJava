@@ -32,11 +32,15 @@ public class InfoSelectionFilmWindowController {
     
     public InfoSelectionFilmWindowController(final ArrayList<Film> selectedFilm, AllFilms bibliotheque1,Film film1)
     {
+        bibliotheque = bibliotheque1;
+        
         if(!selectedFilm.isEmpty())
         {
         infosFilms = new InfosSelectionFilmModelTab(selectedFilm);
         filmWindow = new InfoSelectionFilmWindow(infosFilms);
-        bibliotheque = bibliotheque1;
+        
+        
+        
         filmWindow.registerChoisirButtonListener(new ActionListener(){
             
             public void actionPerformed(ActionEvent e) {
@@ -56,11 +60,17 @@ public class InfoSelectionFilmWindowController {
         else
         {
             film=new Film();
-            film = film1;  
+            film = film1;
+            film.setActors("Non renseignés");
+            film.setComments("Aucun commentaire");
+            film.setDirector("Non renseigné");
+            film.setGenre("Non renseigné");
+            film.setSynopsis("Non renseigné");
+            film.setPoster("http://dev.ripplewerkz.com/halolale/en-default-home/alexa-wedges.jpg");
+            
             empty = new NoResponse();
-            /*System.out.println(film.getTitle());
-            System.out.println(film.getFilmID());
-            bibliotheque.addFilm(film);*/
+            
+            bibliotheque.addFilm(film);
         }
     }
     

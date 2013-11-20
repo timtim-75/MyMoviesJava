@@ -67,20 +67,28 @@ public class FicheSeriePanel extends JPanel{
         dimension.width = 300;
         
         informations = new JPanel();
+        informations.setBackground(Color.white);
         infos = new JPanel();
+        infos.setBackground(Color.white);
         noteComment = new JPanel();
+        noteComment.setBackground(Color.white);
         
         
         
         titre = new JTextArea(serie.getTitle());
         createur = new JTextArea("Createur : "+serie.getDirector());
         genre = new JTextArea("Genre : "+serie.getGenre());
+        synopsis = new JTextArea("\n\nSynopsis : "+serie.getSynopsis());
+        synopsis.setLineWrap(true);
+        synopsis.setWrapStyleWord(true);
         acteurs = new JTextArea("Acteurs : "+serie.getActors());
         acteurs.setLineWrap(true);
         acteurs.setWrapStyleWord(true);
         episode = new JTextArea("Saison : "+serie.getSeason()+" Episode : "+serie.getEpisode());
         poster = new JLabel();
         center = new JPanel();
+        note = new JTextArea("Note : "+Integer.toString(serie.getGrade()));
+        comment = new JTextArea("Commentaires : "+serie.getComments());
         
         url = new URL(TMDB.makePosterQuery(serie.getPoster()));
         System.out.println(url);
@@ -111,9 +119,14 @@ public class FicheSeriePanel extends JPanel{
         this.add(informations, BorderLayout.NORTH);
 
         
+        this.add(synopsis, BorderLayout.CENTER);
+        
         
 
-        noteComment.setBackground(Color.yellow);
+        noteComment.setBackground(Color.white);
+        noteComment.setLayout(new BorderLayout());
+        noteComment.add(note, BorderLayout.WEST);
+        noteComment.add(comment, BorderLayout.EAST);
         this.add(noteComment, BorderLayout.SOUTH); 
     }
     
@@ -125,20 +138,28 @@ public class FicheSeriePanel extends JPanel{
         dimension.width = 300;
         
         informations = new JPanel();
+        informations.setBackground(Color.white);
         infos = new JPanel();
+        infos.setBackground(Color.white);
         noteComment = new JPanel();
+        noteComment.setBackground(Color.white);
        
         
         titre = new JTextArea(serie.getTitle());
         
         createur = new JTextArea("Createur : "+serie.getDirector());
         genre = new JTextArea("Genre : "+serie.getGenre());
+        synopsis = new JTextArea("\n\nSynopsis : "+serie.getSynopsis());
+        synopsis.setLineWrap(true);
+        synopsis.setWrapStyleWord(true);
         acteurs = new JTextArea("Acteurs : "+serie.getActors());
         acteurs.setLineWrap(true);
         acteurs.setWrapStyleWord(true);
         episode = new JTextArea("Saison : "+serie.getSeason()+" Episode : "+serie.getEpisode());
         poster = new JLabel();
         center = new JPanel();
+        note = new JTextArea("Note : "+Integer.toString(serie.getGrade()));
+        comment = new JTextArea("Commentaires : "+serie.getComments());
         
         url = new URL(TMDB.makePosterQuery(serie.getPoster()));
         System.out.println(url);
@@ -174,9 +195,12 @@ public class FicheSeriePanel extends JPanel{
         this.add(informations, BorderLayout.NORTH);
 
        
-        
+        this.add(synopsis, BorderLayout.CENTER);
 
-        noteComment.setBackground(Color.yellow);
+        noteComment.setBackground(Color.white);
+        noteComment.setLayout(new BorderLayout());
+        noteComment.add(note, BorderLayout.WEST);
+        noteComment.add(comment, BorderLayout.EAST);
         this.add(noteComment, BorderLayout.SOUTH); 
                 
     }
@@ -190,19 +214,27 @@ public class FicheSeriePanel extends JPanel{
         dimension.width = 300;
         
         informations = new JPanel();
+        informations.setBackground(Color.white);
         infos = new JPanel();
+        infos.setBackground(Color.white);
         noteComment = new JPanel();
+        noteComment.setBackground(Color.white);
         
         
         titre = new JTextArea(serie.getTitle());
         createur = new JTextArea("Createur : "+serie.getDirector());
         genre = new JTextArea("Genre : "+serie.getGenre());
+        synopsis = new JTextArea("\n\nSynopsis : "+serie.getSynopsis());
+        synopsis.setLineWrap(true);
+        synopsis.setWrapStyleWord(true);
         acteurs = new JTextArea("Acteurs : "+serie.getActors());
         acteurs.setLineWrap(true);
         acteurs.setWrapStyleWord(true);
         episode = new JTextArea("Saison : "+serie.getSeason()+" Episode : "+serie.getEpisode());
         poster = new JLabel();
         center = new JPanel();
+        note = new JTextArea("Note : "+Integer.toString(serie.getGrade()));
+        comment = new JTextArea("Commentaires : "+serie.getComments());
         
         url = new URL(TMDB.makePosterQuery(serie.getPoster()));
         System.out.println(url);
@@ -235,9 +267,12 @@ public class FicheSeriePanel extends JPanel{
         this.add(informations, BorderLayout.NORTH);
 
         
-        
+        this.add(synopsis, BorderLayout.CENTER);
 
-        noteComment.setBackground(Color.yellow);
+        noteComment.setBackground(Color.white);
+        noteComment.setLayout(new BorderLayout());
+        noteComment.add(note, BorderLayout.WEST);
+        noteComment.add(comment, BorderLayout.EAST);
         this.add(noteComment, BorderLayout.SOUTH); 
                 
     }

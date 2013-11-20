@@ -99,7 +99,29 @@ public class FonctionsBases {
             String[] firstSplit = s.split("\\]+");
             for(int i=0; i<firstSplit.length; i++)
             {
-                //System.out.println("Split n° "+ i + " : "+firstSplit[i]);
+                
+                
+                if(firstSplit[i].matches("(.*)\"overview\"(.*)"))
+                {
+                    String[] secondSplit = firstSplit[i].split(",+");
+                    for(int j=0; j<secondSplit.length;j++)
+                    {
+                        if(secondSplit[j].matches("(.*)\"overview\"(.*)"))
+                        {
+                            System.out.println("Split n° "+ j + " : "+secondSplit[j]);
+                            String[] split = secondSplit[j].split(":+");
+                            if(!split[1].matches("\"\""))
+                            {
+                               split[1] = split[1].replace('\"', ' ');
+                               split[1] = split[1].trim();
+                            }
+                            else split[1] = "Pas de Synopsis disponible pour cette Serie";
+
+                            tmpSerie.setSynopsis(split[1]);
+                        }
+                    }
+                }
+                
                 if(firstSplit[i].matches("(.*)created_by(.*)"))
                 {
                     
@@ -305,7 +327,7 @@ public class FonctionsBases {
                     }
                     System.out.println(cast.length);
                     String casting ="";
-                    if(cast.length>12)
+                    if(cast.length>20)
                     {
                         casting = cast[1];
                         for(int l=2;l<24;l++)

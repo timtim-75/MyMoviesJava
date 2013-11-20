@@ -55,7 +55,9 @@ public class AllFilms {
         
         film.setSynopsis(film.getSynopsis().replace('\'','+'));
         film.setActors(film.getActors().replace('\'', '+'));
+        
         SQLite.addFilm(film);
+        
         filmsModele.getFilms().add(film);
         film.setSynopsis(film.getSynopsis().replace('+','\''));
         film.setActors(film.getActors().replace('+', '\''));

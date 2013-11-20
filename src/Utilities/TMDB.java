@@ -100,6 +100,7 @@ public class TMDB {
     {
         System.out.println(keyWords);
         String completeQuery = "";
+        
         keyWords = keyWords.replace(' ','+');
         
         completeQuery = tmdb + searchSerie + apiKey + query + keyWords + language;
@@ -209,7 +210,7 @@ public class TMDB {
     public static String makePosterQuery(String posterPath)
     {
         String poster="";
-        if(!posterPath.matches("(.*)marvel(.*)"))
+        if(!posterPath.matches("(.*)ripplewerkz(.*)"))
         {
             poster = image + width + posterPath;
         }

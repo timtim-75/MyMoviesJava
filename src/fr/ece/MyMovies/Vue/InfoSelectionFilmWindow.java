@@ -4,11 +4,21 @@
  */
 package fr.ece.MyMovies.Vue;
 
+import Utilities.TMDB;
+import fr.ece.MyMovies.Model.Film;
 import fr.ece.MyMovies.Model.InfosSelectionFilmModelTab;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -24,6 +34,8 @@ public class InfoSelectionFilmWindow extends JFrame{
     private JButton choisir;
     private JPanel buttons;
     private InfosSelectionFilmModelTab infoSelectionModele;
+    
+   
     
     public InfoSelectionFilmWindow(InfosSelectionFilmModelTab infoSelectionModele1)
     {
@@ -50,6 +62,7 @@ public class InfoSelectionFilmWindow extends JFrame{
         buttons.add(choisir);
         fond.setLayout(new BorderLayout());
         
+        
         fond.add(buttons, BorderLayout.SOUTH);
         fond.add(new JScrollPane(tableau),BorderLayout.CENTER);
         
@@ -61,11 +74,12 @@ public class InfoSelectionFilmWindow extends JFrame{
     {
         choisir.addActionListener(e);
     }
+    
 
     public int[] getSelectedRows(){
         
         return tableau.getSelectedRows();
     }
     
-    
+   
 }

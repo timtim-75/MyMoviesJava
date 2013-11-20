@@ -105,6 +105,7 @@ public class MainWindowController {
                         s = FonctionsBases.reTitleSerie(choisirVideo.getSelectedFile().getName());
                         serie.setEpisode(s.getEpisode());
                         serie.setTitle(s.getName());
+                        System.out.println("NUI : "+serie.getTitle());
                         serie.setSeason(s.getSeason());
                         serie.setFilmID(bibliotheque.getLastSerieID()+1);
                         bibliotheque.setLastSerieID(bibliotheque.getLastSerieID()+1);

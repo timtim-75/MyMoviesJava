@@ -14,7 +14,13 @@ import fr.ece.MyMovies.Vue.InfoSelectionSerieWindow;
 import fr.ece.MyMovies.Vue.NoResponse;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -50,6 +56,7 @@ public class InfoSelectionSerieWindowController {
             
         });
         
+        
         serieWindow.setVisible(true);
         }
         else
@@ -57,9 +64,7 @@ public class InfoSelectionSerieWindowController {
             serie =new Serie();
             serie = serie1;  
             empty = new NoResponse();
-            /*System.out.println(film.getTitle());
-            System.out.println(film.getFilmID());
-            bibliotheque.addFilm(film);*/
+            
         }
     }
     

@@ -59,8 +59,11 @@ public class FicheFilmPanel extends JPanel{
         dimension.width = 300;
         
         informations = new JPanel();
+        informations.setBackground(Color.white);
         infos = new JPanel();
+        infos.setBackground(Color.white);
         noteComment = new JPanel();
+        noteComment.setBackground(Color.white);
         
         
         titre = new JTextArea(film.getTitle()+" ( "+film.getOriginalTitle()+" )");
@@ -76,6 +79,8 @@ public class FicheFilmPanel extends JPanel{
         acteurs.setWrapStyleWord(true);
         poster = new JLabel();
         center = new JPanel();
+        note = new JTextArea("Note : "+Integer.toString(film.getGrade()));
+        comment = new JTextArea("Commentaires : "+film.getComments());
         
         url = new URL(TMDB.makePosterQuery(film.getPoster()));
         System.out.println(url);
@@ -111,7 +116,10 @@ public class FicheFilmPanel extends JPanel{
         
         this.add(synopsis, BorderLayout.CENTER);
 
-        noteComment.setBackground(Color.yellow);
+        noteComment.setBackground(Color.white);
+        noteComment.setLayout(new BorderLayout());
+        noteComment.add(note, BorderLayout.WEST);
+        noteComment.add(comment, BorderLayout.EAST);
         this.add(noteComment, BorderLayout.SOUTH); 
     }
     
@@ -122,8 +130,11 @@ public class FicheFilmPanel extends JPanel{
         dimension.width = 300;
         
         informations = new JPanel();
+        informations.setBackground(Color.white);
         infos = new JPanel();
+        infos.setBackground(Color.white);
         noteComment = new JPanel();
+        noteComment.setBackground(Color.white);
        
         
         titre = new JTextArea(film.getTitle()+" ( "+film.getOriginalTitle()+" )");
@@ -139,8 +150,11 @@ public class FicheFilmPanel extends JPanel{
         acteurs.setWrapStyleWord(true);
         poster = new JLabel();
         center = new JPanel();
+        note = new JTextArea("Note : "+Integer.toString(film.getGrade()));
+        comment = new JTextArea("Commentaires : "+film.getComments());
         
         url = new URL(TMDB.makePosterQuery(film.getPoster()));
+        System.out.println(film.getPoster());
         System.out.println(url);
         
         img = ImageIO.read(url);
@@ -175,7 +189,10 @@ public class FicheFilmPanel extends JPanel{
        
         this.add(synopsis, BorderLayout.CENTER);
 
-        noteComment.setBackground(Color.yellow);
+        noteComment.setBackground(Color.white);
+        noteComment.setLayout(new BorderLayout());
+        noteComment.add(note, BorderLayout.WEST);
+        noteComment.add(comment, BorderLayout.EAST);
         this.add(noteComment, BorderLayout.SOUTH); 
                 
     }
@@ -189,8 +206,11 @@ public class FicheFilmPanel extends JPanel{
         dimension.width = 300;
         
         informations = new JPanel();
+        informations.setBackground(Color.white);
         infos = new JPanel();
+        infos.setBackground(Color.white);
         noteComment = new JPanel();
+        noteComment.setBackground(Color.white);
         
         
         titre = new JTextArea(film.getTitle()+" ( "+film.getOriginalTitle()+" )");
@@ -205,6 +225,8 @@ public class FicheFilmPanel extends JPanel{
         acteurs.setWrapStyleWord(true);
         poster = new JLabel();
         center = new JPanel();
+        note = new JTextArea("Note : "+Integer.toString(film.getGrade()));
+        comment = new JTextArea("Commentaires : "+film.getComments());
         
         url = new URL(TMDB.makePosterQuery(film.getPoster()));
         System.out.println(url);
@@ -239,7 +261,10 @@ public class FicheFilmPanel extends JPanel{
         
         this.add(synopsis, BorderLayout.CENTER);
 
-        noteComment.setBackground(Color.yellow);
+        noteComment.setBackground(Color.white);
+        noteComment.setLayout(new BorderLayout());
+        noteComment.add(note, BorderLayout.WEST);
+        noteComment.add(comment, BorderLayout.EAST);
         this.add(noteComment, BorderLayout.SOUTH); 
                 
     }
