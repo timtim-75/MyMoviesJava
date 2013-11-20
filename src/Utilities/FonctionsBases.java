@@ -32,8 +32,8 @@ public class FonctionsBases {
     static String dbPath="/Users/timotheegrosjean/Desktop/films.db";
     static File pathDatas;
     static String defaultPlayer = "/Applications/VLC.app/Contents/MacOS/VLC ";
-    static String defaultFilmsDirectory = " /Users/timotheegrosjean/Desktop/MyMovies/Films";
-    static String defaultSeriesDirectory = " /Users/timotheegrosjean/Desktop/MyMovies/Series";
+    static String defaultFilmsDirectory = " /Users/$USER/MyMovies/Films";
+    static String defaultSeriesDirectory = " /Users/$USER/Desktop/MyMovies/Series";
     
     
     
@@ -439,7 +439,7 @@ public class FonctionsBases {
     }
     
     
-    public static void moveFilmFile(String path, String newName) throws IOException
+    /*public static void moveFilmFile(String path, String newName) throws IOException
     {
         
         Runtime runtime = Runtime.getRuntime();
@@ -452,7 +452,7 @@ public class FonctionsBases {
         Runtime runtime = Runtime.getRuntime();
         System.out.println("mv " + path + defaultSeriesDirectory);
         runtime.exec("mv "+path+defaultSeriesDirectory);
-    }
+    }*/
     
     
     public static String getDefaultDirectory()
@@ -464,17 +464,17 @@ public class FonctionsBases {
     {
         return defaultSeriesDirectory;
     }
-    public static void makeDirectory() throws IOException
+   /* public static void makeDirectory() throws IOException
     {
         if(!new File (defaultFilmsDirectory).exists())
         {
-            new File(defaultFilmsDirectory).mkdir();
+            System.out.println(new File("/Users/MyMoviesFile").mkdirs());
         }
         if(!new File(defaultSeriesDirectory).exists())
         {
             new File(defaultSeriesDirectory).mkdir();
         }
-    }
+    }*/
     public static String getDefaultPlayer()
     {
         return defaultPlayer; 

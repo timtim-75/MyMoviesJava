@@ -48,7 +48,10 @@ public class MainWindowController {
         
         bibliotheque.initFromDB();
         
-        FonctionsBases.makeDirectory();
+        
+        /*Runtime runtime = Runtime.getRuntime();
+        runtime.exec("mkdir /Users/$USER/Desktop/MyMovies");*/
+        //FonctionsBases.makeDirectory();
         
         
         
@@ -78,11 +81,11 @@ public class MainWindowController {
                         film.setTitle(FonctionsBases.reTitleFilm(film.getFileName()));
                         film.setFilmID(bibliotheque.getLastFilmID()+1);
                         bibliotheque.setLastFilmID(bibliotheque.getLastFilmID()+1);
-                        try {
+                        /*try {
                             FonctionsBases.moveFilmFile(choisirVideo.getSelectedFile().getAbsolutePath(), film.getTitle() );
                         } catch (IOException ex) {
                             Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        }*/
                         
                         
                         
@@ -110,11 +113,11 @@ public class MainWindowController {
                         serie.setFilmID(bibliotheque.getLastSerieID()+1);
                         bibliotheque.setLastSerieID(bibliotheque.getLastSerieID()+1);
                         
-                        try {
+                        /*try {
                             FonctionsBases.moveSerieFile(choisirVideo.getSelectedFile().getAbsolutePath(), serie.getTitle() );
                         } catch (IOException ex) {
                             Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        }*/
                         
                         try {
                             serieSelection = new InfoSelectionSerieWindowController(FonctionsBases.parseSerieJSON(TMDB.sendIDSQuery(TMDB.makeSerieIDSQuery(FonctionsBases.getFilmsID(TMDB.sendQuery(TMDB.makeSerieSearchQuery(serie.getTitle()))))),serie.getFilmID(), serie.getFilePath(), serie.getFileName(), serie.getSeason(), serie.getEpisode() ),bibliotheque, serie);
