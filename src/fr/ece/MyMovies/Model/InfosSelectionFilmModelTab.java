@@ -11,12 +11,12 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author timotheegrosjean
  */
-public class InfosSelectionModelTab extends AbstractTableModel{
+public class InfosSelectionFilmModelTab extends AbstractTableModel{
     
     private ArrayList<Film>  films = new ArrayList<Film>();
-    private final String[] entetesFilms = {"ID", "Titre", "Annee de Sortie", "Synopsis"};
+    private final String[] entetesFilms = {"Annee", "Titre", "Réalisateur", "Acteurs"};
     
-    public InfosSelectionModelTab(ArrayList<Film> returnFilms)
+    public InfosSelectionFilmModelTab(ArrayList<Film> returnFilms)
     {
         super();
         
@@ -24,8 +24,6 @@ public class InfosSelectionModelTab extends AbstractTableModel{
         {
             films.add(film);  
         }
-        
-
     }
     
     public ArrayList<Film> getFilms()
@@ -37,8 +35,6 @@ public class InfosSelectionModelTab extends AbstractTableModel{
     {
         this.films = films;
     }
-    
-    
     
     public int getRowCount() {
         return films.size();
@@ -56,15 +52,15 @@ public class InfosSelectionModelTab extends AbstractTableModel{
         switch(columnIndex)
         {
             case 0 :
-                return films.get(rowIndex).getFilmID();
+                return films.get(rowIndex).getReleaseYear();
             case 1 :
                 return films.get(rowIndex).getTitle();
                 
             case 2 :
-                return films.get(rowIndex).getReleaseYear();
+                return films.get(rowIndex).getDirector();
                 
             case 3 :
-                return films.get(rowIndex).getSynopsis();
+                return films.get(rowIndex).getActors();
 
             default : 
                 return null;

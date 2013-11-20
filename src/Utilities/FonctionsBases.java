@@ -32,7 +32,8 @@ public class FonctionsBases {
     static String dbPath="/Users/timotheegrosjean/Desktop/films.db";
     static File pathDatas;
     static String defaultPlayer = "/Applications/VLC.app/Contents/MacOS/VLC ";
-    static String defaultDirectory = " /Users/timotheegrosjean/Desktop/MyMovies";
+    static String defaultFilmsDirectory = " /Users/timotheegrosjean/Desktop/MyMovies/Films";
+    static String defaultSeriesDirectory = " /Users/timotheegrosjean/Desktop/MyMovies/Series";
     
     
     
@@ -70,7 +71,7 @@ public class FonctionsBases {
                      split[1] = split[1].replace('\"', ' ');
                      split[1] = split[1].trim();
                      ids.add(split[1]);
-                     //System.out.println(ids);
+                     System.out.println(ids);
                 }
             }
         }
@@ -78,14 +79,167 @@ public class FonctionsBases {
         return ids;
     }
     
-    public static ArrayList<Film> parseJSON(ArrayList<String> responses, int filmID, String filePath, String fileName )
+    
+    
+    public static ArrayList<Serie> parseSerieJSON(ArrayList<String> responses, int seriID, String filePath, String filename, int season, int episode)
+    {
+        ArrayList<Serie> tempSeries = new ArrayList<>();
+        Serie tmpSerie;
+        
+        for(String s : responses )
+        {
+            tmpSerie = new Serie();
+            
+            tmpSerie.setFileName(filename);
+            tmpSerie.setFilePath(filePath);
+            tmpSerie.setFilmID(seriID);
+            tmpSerie.setSeason(season);
+            tmpSerie.setEpisode(episode);
+            
+            String[] firstSplit = s.split("\\]+");
+            for(int i=0; i<firstSplit.length; i++)
+            {
+                //System.out.println("Split n° "+ i + " : "+firstSplit[i]);
+                if(firstSplit[i].matches("(.*)created_by(.*)"))
+                {
+                    
+                    String[] secondSplit = firstSplit[i].split(",+");
+
+                    for(int k=0;k<secondSplit.length;k++)
+                    {
+                        //System.out.println("Split n°"+k+" : "+secondSplit[k]);
+                        if(secondSplit[k].matches("(.*)name(.*)"))
+                        {
+                            secondSplit[k] = secondSplit[k].replace("\"name\":","");
+                            secondSplit[k] = secondSplit[k].replace("\"", "");
+                            //System.out.println("Split n°"+k+" : "+thirdSplit[k]);
+                        }
+                        else secondSplit[k]="";   
+                    }
+                    String creators ="";
+                    if(secondSplit.length>2)
+                    {
+                        creators = secondSplit[2];
+                        for(int l=3;l<secondSplit.length;l++)
+                        {
+                            if(!secondSplit[l].isEmpty())
+                            creators = creators+", "+secondSplit[l];
+                            //System.out.println(creators);
+                        }
+                    }
+                    else creators = "Non renseignés";
+                    tmpSerie.setDirector(creators);
+                }
+                if(firstSplit[i].matches("(.*)genres(.*)"))
+                {
+                    String[] secondSplit = firstSplit[i].split(",+");
+                    for(int j=0;j<secondSplit.length;j++)
+                    {
+                        //System.out.println("Split n°"+j+" : "+secondSplit[j]);
+                        if(secondSplit[j].matches("(.*)name(.*)"))
+                        {
+                            secondSplit[j]=secondSplit[j].replace("\"name\":","");
+                            secondSplit[j]=secondSplit[j].replace("\"","");
+                            secondSplit[j]=secondSplit[j].replace("}","");
+                        }
+                        else secondSplit[j]="";
+                    }
+                    String genre="";
+                    if(secondSplit.length>3)
+                    {
+                        genre = secondSplit[3];
+                        for(int l=4;l<secondSplit.length;l++)
+                        {
+                            if(!secondSplit[l].isEmpty())
+                            genre = genre+", "+secondSplit[l];
+                        }
+                        tmpSerie.setGenre(genre);
+                        
+                    }
+                    else genre = "Non renseignés";
+                    tmpSerie.setGenre(genre);
+                    
+                }
+                if(firstSplit[i].matches("(.*)\"cast\"(.*)"))
+                {
+                    String[] secondSplit = firstSplit[i].split(",+");
+                    for(int j=0; j<secondSplit.length; j++)
+                    {
+                        if(secondSplit[j].matches("(.*)name(.*)"))
+                        {
+                            secondSplit[j]=secondSplit[j].replace("\"name\":","");
+                            secondSplit[j]=secondSplit[j].replace("\"","");
+                            //secondSplit[j]=secondSplit[j].replace("}","");
+                        }
+                        else secondSplit[j]="";
+                    }
+                    String actors="";
+                    if(secondSplit.length>5)
+                    {
+                        actors = secondSplit[7];
+                        for(int l=8;l<32;l++)
+                        {
+                            if(!secondSplit[l].isEmpty())
+                            actors = actors+", "+secondSplit[l];
+                        } 
+                    }
+                    else actors = "Non renseigné";
+                    tmpSerie.setActors(actors);
+                    //System.out.println(actors);
+                    
+                }
+                if(firstSplit[i].matches("(.*)\"overview\"(.*)"))
+                {
+                    String[] secondSplit = firstSplit[i].split("\\[+");
+                    for(int j=0; j<secondSplit.length;j++)
+                    {
+                        if(secondSplit[j].matches("(.*)\"overview\"(.*)"))
+                        {
+                            
+                            String[] thirdSplit = secondSplit[j].split(",+");
+                            for(int k=0; k<thirdSplit.length;k++)
+                            {
+                                if(thirdSplit[k].matches("(.*)poster_path(.*)") && !thirdSplit[k].matches("(.*)null(.*)"))
+                                {
+                                    
+                                    thirdSplit[k] = thirdSplit[k].replace("\"poster_path\":", "");
+                                    thirdSplit[k] = thirdSplit[k].replace("\"","");
+                                    tmpSerie.setPoster(thirdSplit[k]);
+                                }
+                                else if(thirdSplit[k].matches("(.*)poster_path(.*)"))
+                                {
+                                    tmpSerie.setPoster("http://images2.wikia.nocookie.net/__cb20100915045611/marveldatabase/images/thumb/6/60/No_Image_Available.png/185px-No_Image_Available.png");
+                                }
+                            }
+                        }
+                    }  
+                }
+                if(firstSplit[i].matches("(.*)original_name(.*)"))
+                {
+                    String[] secondSplit = firstSplit[i].split(",+");
+                    {
+                        for(int j=0;j<secondSplit.length;j++)
+                        {
+                            if(secondSplit[j].matches("(.*)original_name(.*)"))
+                            {
+                                secondSplit[j] = secondSplit[j].replace("\"original_name\":", "");
+                                secondSplit[j] = secondSplit[j].replace("\"", "");
+                                tmpSerie.setTitle(secondSplit[j]);
+                            }
+                        }
+                    }
+                } 
+            }
+            tempSeries.add(tmpSerie);
+        }
+        return tempSeries;
+    }
+    
+    public static ArrayList<Film> parseFilmJSON(ArrayList<String> responses, int filmID, String filePath, String fileName )
     {   
         
         ArrayList<Film> tempFilms = new ArrayList<Film>();
-        Film tmpFilm;
-
-        
-            
+        Film tmpFilm;  
         for(String s : responses)
         {
             tmpFilm = new Film();
@@ -98,7 +252,7 @@ public class FonctionsBases {
             for(int i=0; i<getGenres.length; i++)
             {
                 
-                System.out.println("TEST : "+getGenres[i]);
+                //System.out.println("TEST : "+getGenres[i]);
                 if(getGenres[i].matches("\\{\"id(.*)") && !getGenres[i].matches(("(.*)character(.*)"))&& !getGenres[i].matches("(.*)job(.*)"))
                 {
                     //System.out.println(getGenres[i]);
@@ -112,7 +266,7 @@ public class FonctionsBases {
                             genres[j]=genres[j].replace("\"","");
                             genres[j]=genres[j].replace("}","");
                             
-                            System.out.println(genres[j]);
+                            //System.out.println(genres[j]);
                         }
                         else genres[j]="";
                     }
@@ -123,7 +277,7 @@ public class FonctionsBases {
                         genre = genre+", "+genres[l];
                     }
                     tmpFilm.setGenre(genre);
-                    System.out.println("Genre : "+genre);
+                    //System.out.println("Genre : "+genre);
                 }
             }
             
@@ -131,7 +285,7 @@ public class FonctionsBases {
             for(int i=0; i<getCast.length; i++)
             {
                 
-                System.out.println("TEST : "+getCast[i]);
+                //System.out.println("TEST : "+getCast[i]);
                 if(getCast[i].matches("\\{\"id(.*)") && getCast[i].matches(("(.*)character(.*)"))&& !getCast[i].matches("(.*)job(.*)"))
                 {
                     //System.out.println(getGenres[i]);
@@ -145,18 +299,25 @@ public class FonctionsBases {
                             cast[j]=cast[j].replace("\"","");
                             cast[j]=cast[j].replace("}","");
                             
-                            System.out.println(cast[j]);
+                            //System.out.println(cast[j]);
                         }
                         else cast[j]="";
                     }
-                    String casting = cast[1];
-                    for(int l=2;l<cast.length;l++)
+                    System.out.println(cast.length);
+                    String casting ="";
+                    if(cast.length>12)
                     {
-                        if(!cast[l].isEmpty())
-                        casting = casting+", "+cast[l];
+                        casting = cast[1];
+                        for(int l=2;l<24;l++)
+                        {  
+                            if(!cast[l].isEmpty())
+                            {
+                            casting = casting+", "+cast[l];
+                            }
+                        } 
                     }
+                    else casting = "Non renseigné";
                     tmpFilm.setActors(casting);
-                    System.out.println("Cast : "+casting);
                 }
             }
             
@@ -164,7 +325,7 @@ public class FonctionsBases {
             for(int i=0; i<getDirector.length; i++)
             {
                 
-                System.out.println("TEST : "+getDirector[i]);
+                //System.out.println("TEST : "+getDirector[i]);
                 if(getDirector[i].matches("\\{\"id(.*)") && !getDirector[i].matches(("(.*)character(.*)"))&& getDirector[i].matches("(.*)job(.*)"))
                 {
                     //System.out.println(getGenres[i]);
@@ -184,10 +345,7 @@ public class FonctionsBases {
                                 }
                                 
                             }
-                        }    
-                                    
-                                
-                        
+                        } 
                     }
                 }
             }
@@ -259,21 +417,40 @@ public class FonctionsBases {
     }
     
     
-    public static void moveFile(String path, String newName) throws IOException
+    public static void moveFilmFile(String path, String newName) throws IOException
+    {
+        
+        Runtime runtime = Runtime.getRuntime();
+        
+        runtime.exec("mv " + path + defaultFilmsDirectory);
+    }
+    
+    public static void moveSerieFile (String path, String newName) throws IOException
     {
         Runtime runtime = Runtime.getRuntime();
-        runtime.exec("mv "+path+defaultDirectory);
+        System.out.println("mv " + path + defaultSeriesDirectory);
+        runtime.exec("mv "+path+defaultSeriesDirectory);
     }
+    
     
     public static String getDefaultDirectory()
     {
-        return defaultDirectory;
+        return defaultFilmsDirectory;
+    }
+    
+    public static String getDefaultSerieDirectory()
+    {
+        return defaultSeriesDirectory;
     }
     public static void makeDirectory() throws IOException
     {
-        if(!new File (defaultDirectory).exists())
+        if(!new File (defaultFilmsDirectory).exists())
         {
-            new File(defaultDirectory).mkdir();
+            new File(defaultFilmsDirectory).mkdir();
+        }
+        if(!new File(defaultSeriesDirectory).exists())
+        {
+            new File(defaultSeriesDirectory).mkdir();
         }
     }
     public static String getDefaultPlayer()

@@ -6,9 +6,9 @@ package fr.ece.MyMovies.Controller;
 
 import fr.ece.MyMovies.Model.AllFilms;
 import fr.ece.MyMovies.Model.Film;
-import fr.ece.MyMovies.Model.InfosSelectionModelTab;
+import fr.ece.MyMovies.Model.InfosSelectionFilmModelTab;
 import fr.ece.MyMovies.Model.TempFilm;
-import fr.ece.MyMovies.Vue.InfoSelectionWindow;
+import fr.ece.MyMovies.Vue.InfoSelectionFilmWindow;
 import fr.ece.MyMovies.Vue.NoResponse;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,21 +21,21 @@ import java.util.logging.Logger;
  *
  * @author timotheegrosjean
  */
-public class InfoSelectionWindowController {
+public class InfoSelectionFilmWindowController {
     
-    InfosSelectionModelTab infosFilms;
+    InfosSelectionFilmModelTab infosFilms;
     AllFilms bibliotheque;
     //ArrayList<Film> returnFilms;
-    InfoSelectionWindow filmWindow ;
+    InfoSelectionFilmWindow filmWindow ;
     NoResponse empty;
     Film film;
     
-    public InfoSelectionWindowController(final ArrayList<Film> selectedFilm, AllFilms bibliotheque1,Film film1)
+    public InfoSelectionFilmWindowController(final ArrayList<Film> selectedFilm, AllFilms bibliotheque1,Film film1)
     {
         if(!selectedFilm.isEmpty())
         {
-        infosFilms = new InfosSelectionModelTab(selectedFilm);
-        filmWindow = new InfoSelectionWindow(infosFilms);
+        infosFilms = new InfosSelectionFilmModelTab(selectedFilm);
+        filmWindow = new InfoSelectionFilmWindow(infosFilms);
         bibliotheque = bibliotheque1;
         filmWindow.registerChoisirButtonListener(new ActionListener(){
             

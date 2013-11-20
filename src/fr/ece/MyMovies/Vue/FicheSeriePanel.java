@@ -6,6 +6,7 @@ package fr.ece.MyMovies.Vue;
 
 import Utilities.TMDB;
 import fr.ece.MyMovies.Model.Film;
+import fr.ece.MyMovies.Model.Serie;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,16 +19,13 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
 /**
  *
  * @author timotheegrosjean
  */
-public class FicheFilmPanel extends JPanel{
-    
-    
+public class FicheSeriePanel extends JPanel{
     
     
     private JPanel informations;
@@ -38,20 +36,30 @@ public class FicheFilmPanel extends JPanel{
     private JTextArea comment;
     private JTextArea titre;
     private JTextArea annee;
-    private JTextArea realisateur;
+    private JTextArea createur;
+    private JTextArea episodeName;
     private JTextArea genre;
-   
+    private JTextArea pays;
     private JTextArea acteurs;
+    private JTextArea episode;
     private JLabel poster;
     private JPanel center;
     
     private URL url;
     private BufferedImage img;
+
+    public FicheSeriePanel() throws MalformedURLException, IOException
+    {
+        Dimension dimension = new Dimension();
+        dimension.height = 500;
+        dimension.width = 500;
+        this.setPreferredSize(dimension);
+        
+    }
     
     
     
-    
-    public void create(Film film) throws MalformedURLException, IOException
+    public void create(Serie serie) throws MalformedURLException, IOException
     {
         
         Dimension dimension = new Dimension();
@@ -63,21 +71,18 @@ public class FicheFilmPanel extends JPanel{
         noteComment = new JPanel();
         
         
-        titre = new JTextArea(film.getTitle()+" ( "+film.getOriginalTitle()+" )");
-        annee = new JTextArea(Integer.toString(film.getReleaseYear()));
-        realisateur = new JTextArea("Realisateur : "+film.getDirector());
-        genre = new JTextArea("Genre : "+film.getGenre());
         
-        synopsis = new JTextArea("\n\nSynopsis : "+film.getSynopsis());
-        synopsis.setLineWrap(true);
-        synopsis.setWrapStyleWord(true);
-        acteurs = new JTextArea("Acteurs : "+film.getActors());
+        titre = new JTextArea(serie.getTitle());
+        createur = new JTextArea("Createur : "+serie.getDirector());
+        genre = new JTextArea("Genre : "+serie.getGenre());
+        acteurs = new JTextArea("Acteurs : "+serie.getActors());
         acteurs.setLineWrap(true);
         acteurs.setWrapStyleWord(true);
+        episode = new JTextArea("Saison : "+serie.getSeason()+" Episode : "+serie.getEpisode());
         poster = new JLabel();
         center = new JPanel();
         
-        url = new URL(TMDB.makePosterQuery(film.getPoster()));
+        url = new URL(TMDB.makePosterQuery(serie.getPoster()));
         System.out.println(url);
         
         img = ImageIO.read(url);
@@ -88,14 +93,11 @@ public class FicheFilmPanel extends JPanel{
         infos.setLayout(new GridLayout(6,1));
 
         infos.add(titre);
-        infos.add(annee);
-        infos.add(realisateur);
+        infos.add(episode);
+        infos.add(createur);
         infos.add(genre);
-        
         infos.add(acteurs);
         
-
-
         infos.setBackground(Color.white);
         center.setBackground(Color.white);
         
@@ -109,14 +111,15 @@ public class FicheFilmPanel extends JPanel{
         this.add(informations, BorderLayout.NORTH);
 
         
-        this.add(synopsis, BorderLayout.CENTER);
+        
 
         noteComment.setBackground(Color.yellow);
         this.add(noteComment, BorderLayout.SOUTH); 
     }
     
-    public void refresh(Film film) throws MalformedURLException, IOException
+    public void refresh(Serie serie) throws MalformedURLException, IOException
     {
+        System.out.println(serie.getTitle());
         Dimension dimension = new Dimension();
         dimension.height = 280;
         dimension.width = 300;
@@ -126,21 +129,18 @@ public class FicheFilmPanel extends JPanel{
         noteComment = new JPanel();
        
         
-        titre = new JTextArea(film.getTitle()+" ( "+film.getOriginalTitle()+" )");
-        annee = new JTextArea(Integer.toString(film.getReleaseYear()));
-        realisateur = new JTextArea("Realisateur : "+film.getDirector());
-        genre = new JTextArea("Genre : "+film.getGenre());
+        titre = new JTextArea(serie.getTitle());
         
-        synopsis = new JTextArea("\n\nSynopsis : "+film.getSynopsis());
-        synopsis.setLineWrap(true);
-        synopsis.setWrapStyleWord(true);
-        acteurs = new JTextArea("Acteurs : "+film.getActors());
+        createur = new JTextArea("Createur : "+serie.getDirector());
+        genre = new JTextArea("Genre : "+serie.getGenre());
+        acteurs = new JTextArea("Acteurs : "+serie.getActors());
         acteurs.setLineWrap(true);
         acteurs.setWrapStyleWord(true);
+        episode = new JTextArea("Saison : "+serie.getSeason()+" Episode : "+serie.getEpisode());
         poster = new JLabel();
         center = new JPanel();
         
-        url = new URL(TMDB.makePosterQuery(film.getPoster()));
+        url = new URL(TMDB.makePosterQuery(serie.getPoster()));
         System.out.println(url);
         
         img = ImageIO.read(url);
@@ -151,10 +151,11 @@ public class FicheFilmPanel extends JPanel{
         infos.setLayout(new GridLayout(6,1));
 
         infos.add(titre);
-        infos.add(annee);
-        infos.add(realisateur);
+
+        infos.add(episode);
+        infos.add(createur);
         infos.add(genre);
-        
+
         infos.add(acteurs);
         
         
@@ -173,14 +174,14 @@ public class FicheFilmPanel extends JPanel{
         this.add(informations, BorderLayout.NORTH);
 
        
-        this.add(synopsis, BorderLayout.CENTER);
+        
 
         noteComment.setBackground(Color.yellow);
         this.add(noteComment, BorderLayout.SOUTH); 
                 
     }
     //Fiche Film
-    public FicheFilmPanel(Film film) throws MalformedURLException, IOException
+    public FicheSeriePanel(Serie serie) throws MalformedURLException, IOException
     {
         super();
         
@@ -193,20 +194,17 @@ public class FicheFilmPanel extends JPanel{
         noteComment = new JPanel();
         
         
-        titre = new JTextArea(film.getTitle()+" ( "+film.getOriginalTitle()+" )");
-        annee = new JTextArea(Integer.toString(film.getReleaseYear()));
-        realisateur = new JTextArea("Realisateur : "+film.getDirector());
-        genre = new JTextArea("Genre : "+film.getGenre());
-        
-        synopsis = new JTextArea("\n\nSynopsis : "+film.getSynopsis());
-        synopsis.setWrapStyleWord(true);
-        acteurs = new JTextArea("Acteurs : "+film.getActors());
+        titre = new JTextArea(serie.getTitle());
+        createur = new JTextArea("Createur : "+serie.getDirector());
+        genre = new JTextArea("Genre : "+serie.getGenre());
+        acteurs = new JTextArea("Acteurs : "+serie.getActors());
         acteurs.setLineWrap(true);
         acteurs.setWrapStyleWord(true);
+        episode = new JTextArea("Saison : "+serie.getSeason()+" Episode : "+serie.getEpisode());
         poster = new JLabel();
         center = new JPanel();
         
-        url = new URL(TMDB.makePosterQuery(film.getPoster()));
+        url = new URL(TMDB.makePosterQuery(serie.getPoster()));
         System.out.println(url);
         
         img = ImageIO.read(url);
@@ -217,8 +215,8 @@ public class FicheFilmPanel extends JPanel{
         infos.setLayout(new GridLayout(6,1));
 
         infos.add(titre);
-        infos.add(annee);
-        infos.add(realisateur);
+        infos.add(episode);
+        infos.add(createur);
         infos.add(genre);
         infos.add(acteurs);
         
@@ -237,22 +235,11 @@ public class FicheFilmPanel extends JPanel{
         this.add(informations, BorderLayout.NORTH);
 
         
-        this.add(synopsis, BorderLayout.CENTER);
+        
 
         noteComment.setBackground(Color.yellow);
         this.add(noteComment, BorderLayout.SOUTH); 
                 
     }
-   
-    public FicheFilmPanel() throws MalformedURLException, IOException
-    {
-        Dimension dimension = new Dimension();
-        dimension.height = 500;
-        dimension.width = 500;
-        this.setPreferredSize(dimension);
-        
-    }
-
-    
     
 }

@@ -22,17 +22,6 @@ public class AllFilms {
     private int lastFilmID;
     private int lastSerieID;
     
-    
-    
-    /*public FicheFilmPanel getFicheFilmModele()
-    {
-        return ficheFilmModele;
-    }
-    public void setFicheFilmModele(FicheFilmPanel ficheFilmModele1)
-    {
-        ficheFilmModele = ficheFilmModele1;
-    }*/
-    
     public FilmsModelTab getFilmotheque()
     {  
         return filmsModele;
@@ -52,8 +41,11 @@ public class AllFilms {
     
     public void addSerie(Serie serie){
         
+        serie.setActors(serie.getActors().replace('\'', '+'));
         SQLite.addSerie(serie);
         seriesModele.getSeries().add(serie);
+        serie.setActors(serie.getActors().replace('+','\''));
+        serie.setTitle(serie.getTitle().replace('_',' '));
         seriesModele.fireTableRowsInserted(seriesModele.getSeries().size() -1, seriesModele.getSeries().size() -1);
         
     }
@@ -62,12 +54,12 @@ public class AllFilms {
         
         
         film.setSynopsis(film.getSynopsis().replace('\'','+'));
+        film.setActors(film.getActors().replace('\'', '+'));
         SQLite.addFilm(film);
         filmsModele.getFilms().add(film);
         film.setSynopsis(film.getSynopsis().replace('+','\''));
+        film.setActors(film.getActors().replace('+', '\''));
         film.setTitle(film.getTitle().replace('_', ' '));
-        
-        System.out.println(film.getSynopsis());
         filmsModele.fireTableRowsInserted(filmsModele.getFilms().size()-1, filmsModele.getFilms().size()-1);
         
         
@@ -183,9 +175,6 @@ public class AllFilms {
         String defaultPlayer = FonctionsBases.getDefaultPlayer();
         runtime.exec(defaultPlayer + seriesModele.getSeries().get(index[0]).getFilePath());
     }
-    
-    
-    
     //Constructeur
     public AllFilms()
     {

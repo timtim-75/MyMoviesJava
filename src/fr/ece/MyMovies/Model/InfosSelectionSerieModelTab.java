@@ -4,37 +4,33 @@
  */
 package fr.ece.MyMovies.Model;
 
-import Utilities.ObjectSerie;
-import javax.swing.table.*;
-import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author timotheegrosjean
  */
-public class SeriesModelTab extends AbstractTableModel {
+public class InfosSelectionSerieModelTab extends AbstractTableModel{
+    private ArrayList<Serie>  series = new ArrayList<>();
+    private final String[] entetesFilms = { "Titre","Créateurs", "Acteurs"};
     
-    private ArrayList<Serie> series= new ArrayList<>();
-    private final String[] entetesSeries = {"ID", "Titre", "Saison", "Episode"};
- 
-    public SeriesModelTab(ArrayList<Serie> seriesFromDB) {
+    public InfosSelectionSerieModelTab(ArrayList<Serie> returnSeries)
+    {
         super();
         
-        for(Serie serie : seriesFromDB)
+        for(Serie serie : returnSeries)
         {
-            series.add(serie);
+            series.add(serie);  
         }
-
-   }
- 
+    }
     
     public ArrayList<Serie> getSeries()
     {
         return series;
     }
     
-    public void setSeries(ArrayList<Serie> series)
+    public void setFilms(ArrayList<Film> films)
     {
         this.series = series;
     }
@@ -44,30 +40,30 @@ public class SeriesModelTab extends AbstractTableModel {
     }
  
     public int getColumnCount() {
-        return entetesSeries.length;
+        return entetesFilms.length;
     }
  
     public String getColumnName(int columnIndex) {
-        return entetesSeries[columnIndex];
+        return entetesFilms[columnIndex];
     }
  
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch(columnIndex)
         {
-            case 0 :
-                return series.get(rowIndex).getFilmID();
-            case 1 :
-                return series.get(rowIndex).getTitle();
-            case 2 :
-                return series.get(rowIndex).getSeason();
-            case 3 :
-                return series.get(rowIndex).getEpisode();
             
+            case 0 :
+                return series.get(rowIndex).getTitle();
+                
+            case 1 :
+                return series.get(rowIndex).getDirector();
+                
+            case 2 :
+                return series.get(rowIndex).getActors();
+
             default : 
                 return null;
                 
         }
        
     }
-
 }

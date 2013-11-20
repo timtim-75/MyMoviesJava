@@ -35,7 +35,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class MainWindowController {
     private MainWindow mainWindow;
-    InfoSelectionWindowController filmSelection;
+    InfoSelectionFilmWindowController filmSelection;
+    InfoSelectionSerieWindowController serieSelection;
     
     
     
@@ -52,7 +53,7 @@ public class MainWindowController {
         
         
         mainWindow = new MainWindow(bibliotheque);
-        mainWindow.createInfoFilm();
+        
         
         // Enregistrer les listeners
         mainWindow.registerAjoutButtonListener(new ActionListener(){
@@ -67,6 +68,7 @@ public class MainWindowController {
                 {
 
                     Film film = new Film();
+                    Serie serie = new Serie();
                     ArrayList<String> tmpID = new ArrayList<>();
                     File fichier = choisirVideo.getSelectedFile();
                     if(FonctionsBases.isFilm(choisirVideo.getSelectedFile().getName()))
@@ -77,28 +79,28 @@ public class MainWindowController {
                         film.setFilmID(bibliotheque.getLastFilmID()+1);
                         bibliotheque.setLastFilmID(bibliotheque.getLastFilmID()+1);
                         try {
-                            FonctionsBases.moveFile(choisirVideo.getSelectedFile().getAbsolutePath(), film.getTitle() );
+                            FonctionsBases.moveFilmFile(choisirVideo.getSelectedFile().getAbsolutePath(), film.getTitle() );
                         } catch (IOException ex) {
                             Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        //System.out.println(film.getTitle());
                         
-                        ;
+                        
+                        
                         try {
-                           filmSelection = new InfoSelectionWindowController(FonctionsBases.parseJSON(TMDB.sendIDSQuery(TMDB.makeIDSQuery(FonctionsBases.getFilmsID(TMDB.sendQuery(TMDB.makeFirstQuery(film.getTitle()))))), film.getFilmID(), film.getFilePath(), film.getFileName()), bibliotheque, film);
+                           filmSelection = new InfoSelectionFilmWindowController(FonctionsBases.parseFilmJSON(TMDB.sendIDSQuery(TMDB.makeFilmIDSQuery(FonctionsBases.getFilmsID(TMDB.sendQuery(TMDB.makeFilmSearchQuery(film.getTitle()))))), film.getFilmID(), film.getFilePath(), film.getFileName()), bibliotheque, film);
+                           
                         } catch (MalformedURLException ex) {
                             Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (IOException ex) {
                             Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        //FonctionsBases.useResponse(null);
-                        //SQLite.addFilm(film);
-                        //bibliotheque.addFilm(film);
+                        
                         
                     }
                     else 
                     {
-                        Serie serie = new Serie();
+                        serie.setFileName(choisirVideo.getSelectedFile().getName());
+                        serie.setFilePath(FonctionsBases.getDefaultDirectory()+"/"+serie.getFileName());
                         ObjectSerie s = new ObjectSerie();
                         s = FonctionsBases.reTitleSerie(choisirVideo.getSelectedFile().getName());
                         serie.setEpisode(s.getEpisode());
@@ -106,16 +108,23 @@ public class MainWindowController {
                         serie.setSeason(s.getSeason());
                         serie.setFilmID(bibliotheque.getLastSerieID()+1);
                         bibliotheque.setLastSerieID(bibliotheque.getLastSerieID()+1);
-                        SQLite.addSerie(serie);
-                        bibliotheque.addSerie(serie);
-
-                        System.out.println(serie.getName()+""+serie.getSeason()+" "+serie.getEpisode());
+                        
+                        try {
+                            FonctionsBases.moveSerieFile(choisirVideo.getSelectedFile().getAbsolutePath(), serie.getTitle() );
+                        } catch (IOException ex) {
+                            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                        try {
+                            serieSelection = new InfoSelectionSerieWindowController(FonctionsBases.parseSerieJSON(TMDB.sendIDSQuery(TMDB.makeSerieIDSQuery(FonctionsBases.getFilmsID(TMDB.sendQuery(TMDB.makeSerieSearchQuery(serie.getTitle()))))),serie.getFilmID(), serie.getFilePath(), serie.getFileName(), serie.getSeason(), serie.getEpisode() ),bibliotheque, serie);
+                        } catch (MalformedURLException ex) {
+                            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
-    
-                //seriesModele.addSerie(new Serie(340,"The Walking Dead", 4, 12 ));
             }
-        
         });
         
         mainWindow.registerRemoveButtonListener(new ActionListener(){
@@ -196,6 +205,7 @@ public class MainWindowController {
                 try {
                     
                     bibliotheque.playFilm(mainWindow.getTabFilmsSelectedRows());
+                    
                 } catch (IOException ex) {
                     Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -203,6 +213,7 @@ public class MainWindowController {
                     case 1:
                 try {
                     bibliotheque.playSerie(mainWindow.getTabSeriesSelectedRows());
+                    
                 } catch (IOException ex) {
                     Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -219,9 +230,30 @@ public class MainWindowController {
             
             public void mouseClicked(MouseEvent e) {
                 try {
-                    //bibliotheque.ficheFilm(mainWindow.getTabFilmsSelectedRows());
+                    
                     mainWindow.refreshInfoFilm();
-                    //mainWindow.revalidate();
+                    
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                
+            }
+            
+                
+        });
+        
+        mainWindow.registerSelectionRowSerieActionListener(new MouseAdapter(){
+        
+            
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    
+                    
+                    mainWindow.refreshInfoSerie();
+                    
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
@@ -235,9 +267,6 @@ public class MainWindowController {
         });
         
         mainWindow.setVisible(true);
-        
-        
-        
     }
     
 }

@@ -15,14 +15,25 @@ public class Serie extends Film{
     int episode;
     String name;
     
-    public Serie(int filmID1, String name1, String path1,String fileName1, int season1, int episode1)
+    public Serie(int id1,String title1, String originalTitle1, int releaseYear1, int duration1, String path1, String fileName1, String genre1,String country1, String director1, String actors1, String synopsis1,String poster1, int grade1, String comments1, int season1, int episode1)
     {
-        this.filmID = filmID1;
-        this.title = name1;
-        this.fileName = fileName1;
-        this.filePath = path1;
-        this.season = season1;
-        this.episode = episode1;
+        filmID = id1;
+        title = title1;
+        originalTitle = originalTitle1;
+        filePath = path1;
+        fileName = fileName1;
+        releaseYear = releaseYear1;
+        duration = duration1;
+        genre = genre1;
+        country = country1;
+        director = director1;
+        actors = actors1;
+        synopsis = synopsis1;
+        poster = poster1;
+        grade = grade1;
+        comments = comments1;
+        season = season1;
+        episode = episode1;
     }
     
     //Getters & Setter

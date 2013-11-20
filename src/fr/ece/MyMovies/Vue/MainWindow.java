@@ -7,6 +7,7 @@ package fr.ece.MyMovies.Vue;
 import fr.ece.MyMovies.Model.AllFilms;
 import fr.ece.MyMovies.Model.Film;
 import fr.ece.MyMovies.Model.FilmsModelTab;
+import fr.ece.MyMovies.Model.Serie;
 import fr.ece.MyMovies.Model.SeriesModelTab;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -18,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.TableColumn;
@@ -44,12 +46,16 @@ public class MainWindow extends JFrame{
     private SeriesModelTab seriesModele;
     private FilmsModelTab filmsModele;
     private FicheFilmPanel ficheFilmsModele;
+    private FicheSeriePanel ficheSeriesModele;
     private JTable tableauSeries;
     private JTable tableauFilms;
     
     //Fiche Film
     private JTabbedPane ficheFilmTab;
+    private JTabbedPane ficheSerieTab;
+    private JPanel ficheVide;
     private JPanel ficheFilmPanel;
+    private JPanel ficheSeriePanel;
     private JPanel informations;
     private JPanel infos;
     private JPanel noteComment;
@@ -85,6 +91,7 @@ public class MainWindow extends JFrame{
         seriesModele = bibliotheque.getSerietheque();
         filmsModele = bibliotheque.getFilmotheque();
         ficheFilmsModele = new FicheFilmPanel();
+        ficheSeriesModele = new FicheSeriePanel();
         
         build();
 	}
@@ -120,74 +127,17 @@ public class MainWindow extends JFrame{
                 searchZone = new JTextField(10);
                 search.add(searchZone);
 
+                
+                //Fiches
                 ficheFilmTab = new JTabbedPane();
-                
-                
-                //ficheFilmPanel = new JPanel();
-                
+                ficheSerieTab = new JTabbedPane();
                 ficheFilmPanel = ficheFilmsModele;
-                ficheFilmPanel.revalidate();
-                ficheFilmTab.addTab("FicheFilm",ficheFilmPanel);
-                ficheFilmTab.repaint();
+                ficheSeriePanel = ficheSeriesModele;
+                ficheFilmTab.addTab("Fiche",ficheFilmPanel);
+                ficheSerieTab.addTab("Fiche", ficheSeriePanel);
+                ficheFilmTab.setVisible(false);
+                ficheSerieTab.setVisible(false);
                 
-                
-                
-               /* //Fiche Film
-                ficheFilmTab = new JTabbedPane();
-                ficheFilmPanel = new JPanel();
-                ficheFilmTab.addTab("FicheFilm",ficheFilmPanel );
-                informations = new JPanel();
-                infos = new JPanel();
-                noteComment = new JPanel();
-                synopsis = new JLabel("Synopsis :");
-                note = new JLabel("note : ");
-                comment = new JLabel("Comment : ");
-                titre = new JLabel("Titre : ");
-                annee = new JLabel("Annee : ");
-                realisateur = new JLabel("Realisateur : ");
-                genre = new JLabel("Genre : ");
-                pays = new JLabel("Pays");
-                acteurs = new JPanel();
-                poster = new JLabel();
-                center = new JPanel();
-                
-                //ficheFilm.setBackground(Color.white);
-                URL url = new URL("http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185//h9nvVfX1r4XUTGS9bbSkVulpqQ0.jpg");
-                BufferedImage img = ImageIO.read(url);
-			
-		poster.setIcon(new ImageIcon(img));
-                        
-                ficheFilmPanel.setLayout(new BorderLayout());
-                infos.setLayout(new GridLayout(6,1));
-                
-                infos.add(titre);
-                infos.add(annee);
-                infos.add(realisateur);
-                infos.add(genre);
-                infos.add(pays);
-                
-                
-                infos.setBackground(Color.white);
-                center.setBackground(Color.white);
-                poster.setBackground(Color.yellow);
-                Dimension dimension = new Dimension();
-                dimension.height = 280;
-                dimension.width = 300;
-                infos.setPreferredSize(dimension);
-                informations.setLayout(new BorderLayout());
-                
-                informations.add(center, BorderLayout.CENTER);
-                informations.add(infos, BorderLayout.EAST);
-                informations.add(poster, BorderLayout.WEST);
-                
-                ficheFilmPanel.add(informations, BorderLayout.NORTH);
-                
-                synopsis.setBackground(Color.blue);
-                ficheFilmPanel.add(synopsis, BorderLayout.CENTER);
-                
-                noteComment.setBackground(Color.yellow);
-                ficheFilmPanel.add(noteComment, BorderLayout.SOUTH);*/
-                        
                 
                 // Boutons
                 boutons = new JPanel();
@@ -216,7 +166,8 @@ public class MainWindow extends JFrame{
                 fond.setLayout(new BorderLayout()); 
                 fond.add(barreMenu,BorderLayout.NORTH);
                 fond.add(tabs, BorderLayout.WEST);
-                fond.add(ficheFilmTab, BorderLayout.EAST);
+                
+                
                 
                 this.add(fond);
                 
@@ -271,8 +222,13 @@ public class MainWindow extends JFrame{
     public void refreshInfoFilm() throws MalformedURLException, IOException
     {
         
+                
+        //ficheFilmTab.addTab("Fiche",ficheFilmPanel);
         ficheFilmsModele.refresh(filmsModele.getFilms().get(tableauFilms.getSelectedRow()));
         ficheFilmsModele.revalidate();
+        ficheSerieTab.setVisible(false);
+        ficheFilmTab.setVisible(true);
+        fond.add(ficheFilmTab, BorderLayout.EAST);
         sousTitres.setEnabled(true);
         sousTitres.revalidate();
         play.setEnabled(true);
@@ -280,12 +236,57 @@ public class MainWindow extends JFrame{
         suppression.setEnabled(true);
         suppression.revalidate();
         
+        
+    }
+    
+    public void refreshInfoSerie() throws MalformedURLException, IOException
+    {
+       System.out.println(seriesModele.getSeries().get(tableauSeries.getSelectedRow()));
+       int[] rows = tableauSeries.getSelectedRows();
+       ArrayList<Serie> s = seriesModele.getSeries();
+       Serie ser = s.get(rows[0]);
+       
+       System.out.println(ser.getTitle());
+       ficheSeriesModele.refresh(ser);
+       
+       ficheSerieTab.setVisible(true);
+       ficheFilmTab.setVisible(false);
+       fond.add(ficheSerieTab,BorderLayout.EAST);
+       ficheSeriesModele.revalidate();
+       sousTitres.setEnabled(true);
+       sousTitres.revalidate();
+       play.setEnabled(true);
+       play.revalidate();
+       suppression.setEnabled(true);
+       suppression.revalidate();
+       
+       //ficheSerieTab.addTab("Fiche", ficheSeriePanel);
+    }
+    
+    public void createInfoSerie() throws MalformedURLException, IOException
+    {
+        //ficheSeriePanel = ficheSeriesModele;
+        
+        ficheSeriesModele.create(seriesModele.getSeries().get(seriesModele.getSeries().size()-1));
+        ficheSeriesModele.revalidate();
+        
     }
    
     public void createInfoFilm() throws MalformedURLException, IOException
     {
-        ficheFilmsModele.create(filmsModele.getFilms().get(0));
+        
+        ficheFilmTab.setVisible(true);
+        ficheSerieTab.setVisible(false);
+        ficheFilmsModele.create(filmsModele.getFilms().get(filmsModele.getFilms().size()-1));
         ficheFilmsModele.revalidate();
+        
     }
+    
+    public void start() throws MalformedURLException, IOException
+    {
+        ficheFilmsModele = new FicheFilmPanel();
+    }
+    
+    
     
 }

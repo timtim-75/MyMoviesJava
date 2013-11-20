@@ -53,7 +53,7 @@ public class SQLite {
                 con.setAutoCommit(true);
                 st = con.createStatement();
                 film.setTitle(film.getTitle().replace(' ', '_')); 
-                System.out.println(film.getTitle());
+                //System.out.println(film.getTitle());
                 int execute = st.executeUpdate("INSERT INTO movies(id,title,originalTitle,releaseYear, filePath, fileName, duration, genre, country, director, actors, synopsis, poster, grade, comment ) VALUES (\'"+film.getFilmID()+"\',\'"+film.getTitle()+"\',\'"+film.getOriginalTitle()+"\',\'"+film.getReleaseYear()+"\',\'"+film.getFilePath()+"\',\'"+film.getFileName()+"\',\'"+film.getDuration()+"\',\'"+film.getGenre()+"\',\'"+film.getCountry()+"\',\'"+film.getDirector()+"\',\'"+film.getActors()+"\',\'"+film.getSynopsis()+"\',\'"+film.getPoster()+"\',\'"+film.getGrade()+"\',\'"+film.getComments()+"\')");
 
         }
@@ -72,10 +72,10 @@ public class SQLite {
                 con.setAutoCommit(true);
                 st = con.createStatement();
                 serie.setTitle(serie.getTitle().replace(' ', '_'));
-                System.out.println(serie.getTitle());
-                String query = "INSERT INTO series(id,title,originalTitle,releaseYear, filePath, fileName, duration, genre, country, director, actors, synopsis, poster, grade, comment ) VALUES (\'"+serie.getFilmID()+"\',\'"+serie.getTitle()+"\',\'"+serie.getOriginalTitle()+"\',\'"+serie.getReleaseYear()+"\',\'"+serie.getFilePath()+"\',\'"+serie.getFileName()+"\',\'"+serie.getDuration()+"\',\'"+serie.getGenre()+"\',\'"+serie.getCountry()+"\',\'"+serie.getDirector()+"\',\'"+serie.getActors()+"\',\'"+serie.getSynopsis()+"\',\'"+serie.getPoster()+"\',\'"+serie.getGrade()+"\',\'"+serie.getComments()+"\')";
+                //System.out.println(serie.getTitle());
+                String query = "INSERT INTO series(id,title,originalTitle,releaseYear, filePath, fileName, duration, genre, country, director, actors, synopsis, poster, grade, comment, season, episode ) VALUES (\'"+serie.getFilmID()+"\',\'"+serie.getTitle()+"\',\'"+serie.getOriginalTitle()+"\',\'"+serie.getReleaseYear()+"\',\'"+serie.getFilePath()+"\',\'"+serie.getFileName()+"\',\'"+serie.getDuration()+"\',\'"+serie.getGenre()+"\',\'"+serie.getCountry()+"\',\'"+serie.getDirector()+"\',\'"+serie.getActors()+"\',\'"+serie.getSynopsis()+"\',\'"+serie.getPoster()+"\',\'"+serie.getGrade()+"\',\'"+serie.getComments()+"\',\'"+serie.getSeason()+"\',\'"+serie.getEpisode()+"\')";
                 int execute = st.executeUpdate(query);
-                System.out.println(query);
+                //System.out.println(query);
 
         }
         catch(Exception e){
@@ -210,12 +210,36 @@ public class SQLite {
 
                    int id = rs.getInt("id");
                    String title = rs.getString("title");
+                   String originalTitle = rs.getString("originalTitle");
+                   int releaseYear = rs.getInt("releaseYear");
                    String path = rs.getString("filePath");
                    String fileName = rs.getString("fileName");
+                   int duration = rs.getInt("duration");
                    int season = rs.getInt("season");
                    int episode = rs.getInt("episode");
+                   String genre = rs.getString("genre");
+                   String country = rs.getString("country");
+                   String synopsis = rs.getString("synopsis");
+                   String director = rs.getString("director");
+                   String actors = rs.getString("actors");
+                   String poster = rs.getString("poster");
+                   int grade = rs.getInt("grade");
+                   String comments = rs.getString("comment");
+                   
                    title = title.replace('_', ' ');
-                   seriesFromDB.add(new Serie(id, title, path, fileName, season, episode));
+                   originalTitle = originalTitle.replace('_', ' ');
+                   path = path.replace('_', ' ');
+                   fileName = fileName.replace('_', ' ');
+                   genre = genre.replace('_', ' ');
+                   country = country.replace('_', ' ');
+                   director = director.replace('_', ' ');
+                   actors = actors.replace('_', ' ');
+                   synopsis = synopsis.replace('_', ' ');
+                   synopsis = synopsis.replace('+', '\'');
+                   poster = poster.replace('_', ' ');
+                   comments = comments.replace('_', ' ');
+                   
+                   seriesFromDB.add(new Serie(id, title, originalTitle, releaseYear,duration,  path, fileName,  genre, country, director, actors, synopsis, poster, grade, comments, season, episode));
 
 
                 }

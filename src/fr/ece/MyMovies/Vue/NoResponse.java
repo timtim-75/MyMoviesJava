@@ -4,7 +4,7 @@
  */
 package fr.ece.MyMovies.Vue;
 
-import fr.ece.MyMovies.Model.InfosSelectionModelTab;
+import fr.ece.MyMovies.Model.InfosSelectionFilmModelTab;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
